@@ -1,0 +1,733 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>C Structures and Unions Practice</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #f0f2f5;
+            display: flex;
+            justify-content: center;
+            align-items: flex-start; /* Align to top */
+            min-height: 100vh;
+            padding: 20px;
+            box-sizing: border-box;
+        }
+        .container {
+            background-color: #ffffff;
+            padding: 30px;
+            border-radius: 12px;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+            max-width: 900px;
+            width: 100%;
+        }
+        pre {
+            background-color: #f8f8f8;
+            border: 1px solid #e0e0e0;
+            padding: 15px;
+            border-radius: 8px;
+            overflow-x: auto;
+            font-size: 0.9em;
+            line-height: 1.4;
+            color: #333;
+        }
+        .code-block {
+            margin-bottom: 25px;
+            padding: 20px;
+            border: 1px solid #dcdcdc;
+            border-radius: 10px;
+            background-color: #fff;
+        }
+        .question-title {
+            font-weight: 600;
+            color: #2c3e50;
+            margin-bottom: 10px;
+            font-size: 1.1em;
+        }
+        .answer-container, .solution-container {
+            margin-top: 15px;
+            background-color: #ecf7ed;
+            border-left: 5px solid #4CAF50;
+            padding: 12px;
+            border-radius: 6px;
+        }
+        .answer-text, .solution-text {
+            color: #2e7d32;
+            font-weight: 500;
+        }
+        .toggle-button {
+            background-color: #3498db;
+            color: white;
+            padding: 8px 15px;
+            border-radius: 8px;
+            transition: background-color 0.3s ease;
+            cursor: pointer;
+            margin-top: 10px;
+            font-size: 0.9em;
+            display: inline-block;
+        }
+        .toggle-button:hover {
+            background-color: #2980b9;
+        }
+        h1 {
+            color: #2c3e50;
+            font-size: 2.2em;
+            font-weight: 700;
+            text-align: center;
+            margin-bottom: 20px;
+        }
+        h2 {
+            color: #2c3e50;
+            font-size: 1.8em;
+            font-weight: 700;
+            margin-top: 30px;
+            margin-bottom: 15px;
+            border-bottom: 2px solid #e0e0e0;
+            padding-bottom: 5px;
+        }
+        h3 {
+            color: #34495e;
+            font-size: 1.4em;
+            font-weight: 600;
+            margin-top: 20px;
+            margin-bottom: 10px;
+        }
+        p {
+            color: #555;
+            margin-bottom: 15px;
+            line-height: 1.6;
+        }
+        ul {
+            list-style-type: disc;
+            margin-left: 20px;
+            margin-bottom: 15px;
+            color: #555;
+        }
+        ol {
+            list-style-type: decimal;
+            margin-left: 20px;
+            margin-bottom: 15px;
+            color: #555;
+        }
+        code {
+            background-color: #e9e9e9;
+            padding: 2px 5px;
+            border-radius: 4px;
+            font-family: 'Courier New', Courier, monospace;
+            font-size: 0.9em;
+        }
+        .theory-section {
+            margin-bottom: 40px;
+        }
+        .hidden {
+            display: none;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <a href="index.html" class="back-button">&larr; Back to Home</a>
+        <h1>C Structures and Unions Practice</h1>
+        <p>This page provides a comprehensive guide to C Structures and Unions, including detailed theory and a set of practice questions to test your understanding of these fundamental concepts.</p>
+
+        <div class="theory-section">
+            <h2>Structures: Detailed Theory</h2>
+            <p>A <strong>structure</strong> in C is a user-defined data type that allows you to combine different data types under a single name. It's a way to create a record that can store multiple pieces of information related to a single entity. Unlike arrays, which store elements of the same data type, structures can store elements of different data types.</p>
+
+            <h3>Declaration of a Structure</h3>
+            <p>A structure is declared using the <code>struct</code> keyword, followed by a tag name and a list of members enclosed in curly braces. Each member can be of a different data type.</p>
+            <pre><code>struct Student {
+    char name[50];
+    int roll_no;
+    float marks;
+};</code></pre>
+            <ul>
+                <li><code>struct Student</code>: Declares a structure named <code>Student</code>.</li>
+                <li><code>name</code>, <code>roll_no</code>, <code>marks</code>: These are the members (or fields) of the structure.</li>
+            </ul>
+
+            <h3>Defining Structure Variables</h3>
+            <p>Once a structure is declared, you can define variables of that structure type. This allocates memory for the structure members.</p>
+            <pre><code>struct Student s1; // Declares a structure variable s1
+struct Student s2, s3; // Declares multiple structure variables</code></pre>
+            <p>You can also declare a structure and define variables in a single step:</p>
+            <pre><code>struct Employee {
+    int id;
+    char department[20];
+} emp1, emp2; // emp1 and emp2 are structure variables</code></pre>
+
+            <h3>Accessing Structure Members</h3>
+            <p>Members of a structure are accessed using the <strong>dot operator (`.`)</strong> if you have a structure variable, or the <strong>arrow operator (`->`)</strong> if you have a pointer to a structure.</p>
+            <pre><code>struct Student s1;
+s1.roll_no = 101; // Using dot operator
+
+struct Student *ptr_s = &s1;
+printf("%d\\n", ptr_s->roll_no); // Using arrow operator</code></pre>
+
+            <h3>Initialization of Structures</h3>
+            <p>Structures can be initialized at the time of declaration, similar to arrays.</p>
+            <pre><code>struct Point {
+    int x;
+    int y;
+};
+
+struct Point p1 = {10, 20}; // Initializing all members
+struct Point p2 = {.y = 50, .x = 30}; // Designated initializer (C99 and later)
+struct Point p3 = {5}; // Initializes x to 5, y to 0</code></pre>
+
+            <h3>Structure Padding and <code>sizeof</code></h3>
+            <p>The total size of a structure is not always the sum of the sizes of its individual members due to <strong>structure padding</strong>. Compilers add padding bytes to align members on memory boundaries, which can improve performance but may increase memory usage. The <code>sizeof</code> operator can be used to determine the actual size.</p>
+            <pre><code>struct Example {
+    char a;    // 1 byte
+    int b;     // 4 bytes
+    char c;    // 1 byte
+};
+// Size of Example might be 12 bytes (1 + 3(padding) + 4 + 1 + 3(padding))
+// depending on compiler and architecture.</code></pre>
+
+            <h2>Unions: Detailed Theory</h2>
+            <p>A <strong>union</strong> in C is a special data type that allows different data types to be stored in the same memory location. It's designed to save memory by allowing multiple members to share the largest member's memory space. Only one member of a union can hold a value at any given time.</p>
+
+            <h3>Declaration of a Union</h3>
+            <p>A union is declared using the <code>union</code> keyword, similar to structures.</p>
+            <pre><code>union Data {
+    int i;
+    float f;
+    char str[20];
+};</code></pre>
+            <ul>
+                <li><code>union Data</code>: Declares a union named <code>Data</code>.</li>
+                <li><code>i</code>, <code>f</code>, <code>str</code>: These are the members of the union.</li>
+            </ul>
+
+            <h3>Defining Union Variables</h3>
+            <p>Defining union variables is similar to structures.</p>
+            <pre><code>union Data d1; // Declares a union variable d1</code></pre>
+
+            <h3>Accessing Union Members</h3>
+            <p>Members of a union are accessed using the <strong>dot operator (`.`)</strong> or the <strong>arrow operator (`->`)</strong>, just like structures. However, you should only access the member that was most recently written to.</p>
+            <pre><code>union Data d1;
+d1.i = 10;
+printf("Integer: %d\\n", d1.i);
+
+d1.f = 22.5; // This overwrites the value of d1.i
+printf("Float: %.1f\\n", d1.f);
+// printf("Integer (after float assignment): %d\\n", d1.i); // This would yield garbage</code></pre>
+
+            <h3>Union Memory Allocation and <code>sizeof</code></h3>
+            <p>The size of a union is determined by the size of its largest member. All members share this common memory space.</p>
+            <pre><code>union Data {
+    int i;     // typically 4 bytes
+    float f;   // typically 4 bytes
+    char str[20]; // 20 bytes
+};
+// Size of Data will be 20 bytes (the size of 'str')</code></pre>
+
+            <h3>Key Differences between Structures and Unions</h3>
+            <ul>
+                <li><strong>Memory Allocation:</strong>
+                    <ul>
+                        <li><strong>Structures:</strong> Each member gets its own distinct memory location. The total size is the sum of members' sizes (plus padding).</li>
+                        <li><strong>Unions:</strong> All members share the same memory location. The total size is equal to the size of the largest member.</li>
+                    </ul>
+                </li>
+                <li><strong>Data Storage:</strong>
+                    <ul>
+                        <li><strong>Structures:</strong> All members can store values simultaneously.</li>
+                        <li><strong>Unions:</strong> Only one member can hold a valid value at any given time (the last one assigned).</li>
+                    </ul>
+                </li>
+                <li><strong>Use Case:</strong>
+                    <ul>
+                        <li><strong>Structures:</strong> Used when you need to store related data of different types simultaneously.</li>
+                        <li><strong>Unions:</strong> Used when you want to use the same memory location for different types of data, typically to save memory or handle polymorphic data.</li>
+                    </ul>
+                </ul>
+        </div>
+
+        <h2>Practice Questions: Predict the Output</h2>
+        <p>Test your knowledge by predicting the output of these C code snippets related to structures and unions.</p>
+
+        <div id="predict-output-questions-container">
+            <!-- Predict Output Questions will be loaded here by JavaScript -->
+        </div>
+
+        <h2>Code Writing Problems</h2>
+        <p>Practice writing C code for structures and unions by solving these problems. Try to implement the solution yourself before revealing the suggested code.</p>
+
+        <div id="code-writing-problems-container">
+            <!-- Code Writing Problems will be loaded here by JavaScript -->
+        </div>
+    </div>
+
+    <script>
+        const predictOutputQuestions = [
+            {
+                code: `#include <stdio.h>
+struct Point {
+    int x;
+    int y;
+};
+int main() {
+    struct Point p1 = {10, 20};
+    printf("p1.x = %d, p1.y = %d\\n", p1.x, p1.y);
+    return 0;
+}`,
+                answer: `p1.x = 10, p1.y = 20`
+            },
+            {
+                code: `#include <stdio.h>
+struct Rect {
+    int length;
+    int width;
+};
+int main() {
+    struct Rect r1;
+    r1.length = 5;
+    r1.width = 10;
+    printf("Area = %d\\n", r1.length * r1.width);
+    return 0;
+}`,
+                answer: `Area = 50`
+            },
+            {
+                code: `#include <stdio.h>
+struct Person {
+    char name[20];
+    int age;
+};
+int main() {
+    struct Person p = {"Alice", 30};
+    struct Person *ptr = &p;
+    printf("Name: %s, Age: %d\\n", ptr->name, ptr->age);
+    return 0;
+}`,
+                answer: `Name: Alice, Age: 30`
+            },
+            {
+                code: `#include <stdio.h>
+struct Data {
+    char c;
+    int i;
+};
+int main() {
+    printf("Size of Data: %lu\\n", sizeof(struct Data));
+    return 0;
+}`,
+                answer: `8 (Due to padding: 1 byte for char + 3 bytes padding + 4 bytes for int, typical for 4-byte aligned systems)`
+            },
+            {
+                code: `#include <stdio.h>
+union Value {
+    int i;
+    float f;
+};
+int main() {
+    union Value val;
+    val.i = 10;
+    val.f = 3.14; // Overwrites val.i
+    printf("val.i = %d, val.f = %.2f\\n", val.i, val.f);
+    return 0;
+}`,
+                answer: `val.i = (some garbage integer, depends on float bit representation of 3.14), val.f = 3.14`
+            },
+            {
+                code: `#include <stdio.h>
+union Mixed {
+    int a;
+    char b[10];
+    float c;
+};
+int main() {
+    printf("Size of Mixed: %lu\\n", sizeof(union Mixed));
+    return 0;
+}`,
+                answer: `10 (Size of largest member, which is char b[10])`
+            },
+            {
+                code: `#include <stdio.h>
+struct Node {
+    int data;
+    struct Node *next;
+};
+int main() {
+    struct Node n1;
+    n1.data = 100;
+    n1.next = NULL;
+    printf("Node data: %d\\n", n1.data);
+    return 0;
+}`,
+                answer: `Node data: 100`
+            },
+            {
+                code: `#include <stdio.h>
+struct S {
+    char c1;
+    double d;
+    char c2;
+};
+int main() {
+    printf("Size of S: %lu\\n", sizeof(struct S));
+    return 0;
+}`,
+                answer: `24 (1 byte for c1 + 7 bytes padding + 8 bytes for double + 1 byte for c2 + 7 bytes padding for alignment, typical for 8-byte aligned systems)`
+            },
+            {
+                code: `#include <stdio.h>
+union U {
+    int x;
+    short y;
+    char z;
+};
+int main() {
+    union U u;
+    u.x = 258; // Binary: ...0000 0001 0000 0010 (if int is 4 bytes)
+    printf("u.z = %d\\n", u.z); // Accessing char member (least significant byte)
+    return 0;
+}`,
+                answer: `2 (On little-endian systems, 258 is stored as 02 01 00 00, so z gets 2. On big-endian, z would get 1)`
+            },
+            {
+                code: `#include <stdio.h>
+struct Employee {
+    int id;
+    float salary;
+};
+void display(struct Employee e) {
+    printf("ID: %d, Salary: %.2f\\n", e.id, e.salary);
+}
+int main() {
+    struct Employee emp = {101, 50000.50};
+    display(emp);
+    return 0;
+}`,
+                answer: `ID: 101, Salary: 50000.50`
+            },
+            {
+                code: `#include <stdio.h>
+struct Point {
+    int x;
+    int y;
+};
+int main() {
+    struct Point p = {1, 2};
+    struct Point *ptr = &p;
+    ptr->x = 5;
+    (*ptr).y = 10;
+    printf("x = %d, y = %d\\n", p.x, p.y);
+    return 0;
+}`,
+                answer: `x = 5, y = 10`
+            },
+            {
+                code: `#include <stdio.h>
+struct Student {
+    char name[10];
+    int roll;
+};
+int main() {
+    struct Student s = {"John", 1};
+    struct Student s_copy = s; // Structure assignment
+    s_copy.roll = 2;
+    printf("Original Roll: %d, Copy Roll: %d\\n", s.roll, s_copy.roll);
+    return 0;
+}`,
+                answer: `Original Roll: 1, Copy Roll: 2`
+            },
+            {
+                code: `#include <stdio.h>
+typedef struct {
+    int code;
+    char type;
+} Item;
+int main() {
+    Item my_item = {10, 'A'};
+    printf("Code: %d, Type: %c\\n", my_item.code, my_item.type);
+    return 0;
+}`,
+                answer: `Code: 10, Type: A`
+            },
+            {
+                code: `#include <stdio.h>
+struct S {
+    char c1;
+    int i;
+    char c2;
+} __attribute__((packed)); // Disable padding (GCC specific)
+int main() {
+    printf("Size of S (packed): %lu\\n", sizeof(struct S));
+    return 0;
+}`,
+                answer: `6 (1 for c1 + 4 for int + 1 for c2)`
+            },
+            {
+                code: `#include <stdio.h>
+struct Status {
+    unsigned int is_open : 1;
+    unsigned int count : 4;
+    unsigned int error_code : 3;
+};
+int main() {
+    struct Status s;
+    s.is_open = 1;
+    s.count = 10;
+    s.error_code = 7;
+    printf("Is Open: %u, Count: %u, Error Code: %u\\n", s.is_open, s.count, s.error_code);
+    printf("Size of Status: %lu\\n", sizeof(struct Status));
+    return 0;
+}`,
+                answer: `Is Open: 1, Count: 10, Error Code: 7\nSize of Status: 4 (typical, as the compiler might align to an int boundary, but could be 1 depending on implementation)`
+            }
+        ];
+
+        const codeWritingProblems = [
+            {
+                title: "Basic Book Structure",
+                problem: `Define a structure \`Book\` with members \`char title[50]\`, \`char author[50]\`, and \`int publication_year\`.
+Create a variable of this structure, initialize its members, and print all the details.`,
+                solution: `#include <stdio.h>
+#include <string.h>
+
+struct Book {
+    char title[50];
+    char author[50];
+    int publication_year;
+};
+
+int main() {
+    // Create a Book variable and initialize it
+    struct Book book1 = {"The C Programming Language", "Dennis Ritchie", 1978};
+
+    // Print the book details
+    printf("Book Title: %s\\n", book1.title);
+    printf("Author: %s\\n", book1.author);
+    printf("Publication Year: %d\\n", book1.publication_year);
+
+    return 0;
+}`
+            },
+            {
+                title: "Array of Students - Find Highest Marks",
+                problem: `Define a structure \`Student\` with \`char name[50]\` and \`float marks\`.
+Declare an array of 3 \`Student\`s, hardcode their data, and then find and print the name of the student who scored the highest marks.`,
+                solution: `#include <stdio.h>
+#include <string.h>
+
+struct Student {
+    char name[50];
+    float marks;
+};
+
+int main() {
+    // Declare an array of 3 Student structs
+    struct Student students[3];
+
+    // Hardcode data for 3 students
+    strcpy(students[0].name, "Alice");
+    students[0].marks = 85.5;
+
+    strcpy(students[1].name, "Bob");
+    students[1].marks = 92.0;
+
+    strcpy(students[2].name, "Charlie");
+    students[2].marks = 78.0;
+
+    // Find the student with the highest marks
+    int highest_scorer_index = 0;
+    for (int i = 1; i < 3; i++) {
+        if (students[i].marks > students[highest_scorer_index].marks) {
+            highest_scorer_index = i;
+        }
+    }
+
+    // Print the name of the student with the highest marks
+    printf("Student with highest marks: %s (%.2f marks)\\n",
+           students[highest_scorer_index].name, students[highest_scorer_index].marks);
+
+    return 0;
+}`
+            },
+            {
+                title: "Function to Update Product Price (using pointer)",
+                problem: `Define a structure \`Product\` with \`char name[50]\` and \`float price\`.
+Write a function \`update_price\` that takes a pointer to a \`Product\` struct and a new price as arguments, and updates the product's price.
+In \`main\`, create a \`Product\`, call the function, and print the updated price.`,
+                solution: `#include <stdio.h>
+#include <string.h>
+
+struct Product {
+    char name[50];
+    float price;
+};
+
+// Function to update the price of a product using a pointer
+void update_price(struct Product *p, float new_price) {
+    p->price = new_price; // Use arrow operator to access member via pointer
+}
+
+int main() {
+    struct Product laptop = {"Laptop Pro", 1200.00};
+
+    printf("Original Price of %s: %.2f\\n", laptop.name, laptop.price);
+
+    // Call the function to update the price
+    update_price(&laptop, 1150.99); // Pass the address of laptop
+
+    printf("Updated Price of %s: %.2f\\n", laptop.name, laptop.price);
+
+    return 0;
+}`
+            },
+            {
+                title: "Union for Flexible Data Storage with Type Flag",
+                problem: `Create a structure \`DataWrapper\` that contains a \`union Value\` and an \`int type_flag\`.
+The \`union Value\` should have members \`int int_val\` and \`float float_val\`.
+Write a program that demonstrates storing an integer and then a float in the \`DataWrapper\`
+(using the \`type_flag\` to indicate which member of the union is active) and printing the correct value.
+Use 0 for int type and 1 for float type in \`type_flag\`.`,
+                solution: `#include <stdio.h>
+
+// Define the union for flexible data storage
+union Value {
+    int int_val;
+    float float_val;
+};
+
+// Define the structure that wraps the union and a type flag
+struct DataWrapper {
+    union Value data;
+    int type_flag; // 0 for int_val, 1 for float_val
+};
+
+int main() {
+    struct DataWrapper wrapper;
+
+    // Store an integer
+    wrapper.type_flag = 0; // Indicate integer
+    wrapper.data.int_val = 123;
+    printf("Stored as int: ");
+    if (wrapper.type_flag == 0) {
+        printf("%d\\n", wrapper.data.int_val);
+    } else {
+        printf("Error: Expected int, got float.\\n");
+    }
+
+    // Store a float
+    wrapper.type_flag = 1; // Indicate float
+    wrapper.data.float_val = 45.67f;
+    printf("Stored as float: ");
+    if (wrapper.type_flag == 1) {
+        printf("%.2f\\n", wrapper.data.float_val);
+    } else {
+        printf("Error: Expected float, got int.\\n");
+    }
+
+    // Attempting to read integer after storing float (will show garbage)
+    printf("Attempting to read int after float: %d\\n", wrapper.data.int_val);
+
+    return 0;
+}`
+            },
+            {
+                title: "Simple Singly Linked List Nodes",
+                problem: `Define a structure \`Node\` for a singly linked list with an \`int data\` member and a pointer \`struct Node *next\`.
+Create two \`Node\`s using dynamic memory allocation, assign data to them, link them together (Node1 -> Node2),
+and then traverse the list to print the \`data\` of each node. Remember to free the allocated memory.`,
+                solution: `#include <stdio.h>
+#include <stdlib.h> // For malloc and free
+
+// Define the structure for a linked list node
+struct Node {
+    int data;
+    struct Node *next; // Pointer to the next node in the list
+};
+
+int main() {
+    // Create the first node
+    struct Node *head = (struct Node *)malloc(sizeof(struct Node));
+    if (head == NULL) {
+        printf("Memory allocation failed!\\n");
+        return 1;
+    }
+    head->data = 10;
+    head->next = NULL; // Initialize next to NULL
+
+    // Create the second node
+    struct Node *second = (struct Node *)malloc(sizeof(struct Node));
+    if (second == NULL) {
+        printf("Memory allocation failed!\\n");
+        free(head); // Free previously allocated memory
+        return 1;
+    }
+    second->data = 20;
+    second->next = NULL;
+
+    // Link the first node to the second node
+    head->next = second;
+
+    // Traverse the list and print data
+    struct Node *current = head;
+    printf("Linked List Elements:\\n");
+    while (current != NULL) {
+        printf("%d -> ", current->data);
+        current = current->next;
+    }
+    printf("NULL\\n");
+
+    // Free allocated memory to prevent memory leaks
+    free(head);
+    free(second);
+
+    return 0;
+}`
+            }
+        ];
+
+        const predictOutputContainer = document.getElementById('predict-output-questions-container');
+        const codeWritingContainer = document.getElementById('code-writing-problems-container');
+
+        predictOutputQuestions.forEach((q, index) => {
+            const questionBlock = document.createElement('div');
+            questionBlock.className = 'code-block';
+            questionBlock.innerHTML = `
+                <div class="question-title">Question ${index + 1}: Predict the output.</div>
+                <pre><code>${q.code}</code></pre>
+                <button class="toggle-button" onclick="toggleContent('answer-${index}', this)">Show Answer</button>
+                <div id="answer-${index}" class="answer-container hidden">
+                    <div class="answer-text">Output: <br> ${q.answer.replace(/\\n/g, '<br>')}</div>
+                </div>
+            `;
+            predictOutputContainer.appendChild(questionBlock);
+        });
+
+        codeWritingProblems.forEach((p, index) => {
+            const problemBlock = document.createElement('div');
+            problemBlock.className = 'code-block';
+            problemBlock.innerHTML = `
+                <div class="question-title">Problem ${index + 1}: ${p.title}</div>
+                <p>${p.problem}</p>
+                <button class="toggle-button" onclick="toggleContent('solution-${index}', this)">Show Solution</button>
+                <div id="solution-${index}" class="solution-container hidden">
+                    <div class="solution-text">Suggested Solution:</div>
+                    <pre><code>${p.solution}</code></pre>
+                </div>
+            `;
+            codeWritingContainer.appendChild(problemBlock);
+        });
+
+        function toggleContent(id, button) {
+            const contentDiv = document.getElementById(id);
+            contentDiv.classList.toggle('hidden');
+            if (contentDiv.classList.contains('hidden')) {
+                button.textContent = button.textContent.replace('Hide', 'Show');
+            } else {
+                button.textContent = button.textContent.replace('Show', 'Hide');
+            }
+        }
+    </script>
+</body>
+</html>
