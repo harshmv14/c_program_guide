@@ -1,0 +1,370 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Interactive C Programming in 2 Days</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <!-- Chosen Palette: Slate and Sky -->
+    <!-- Application Structure Plan: A two-day tabbed single-page application. Each day has a persistent sidebar for sub-navigation, allowing users to jump to specific topics (e.g., "Fundamentals", "Pointers"). This structure is more intuitive for a learning plan than a linear document, enabling users to easily navigate between sections and review topics. Key interactions include tab switching for days, sidebar navigation for topics, and toggleable solution viewers for practice problems to encourage active learning. -->
+    <!-- Visualization & Content Choices: Report Info: The report is a 2-day C learning plan. Goal: Provide an organized, interactive learning path. Viz/Presentation Method: 1. Main content organized by topic in styled text/code blocks. 2. A "Learning Roadmap" chart to visualize the course structure. Interaction: 1. Tabs for Day 1/Day 2. 2. Sidebar links to scroll to sections. 3. "Show/Hide Solution" buttons for practice problems. Justification: This interactive structure makes the dense material more digestible, promotes active problem-solving, and gives users a clear overview of their learning journey. Library/Method: Chart.js for the roadmap visualization due to its simplicity and clean look. Vanilla JS for all interactions. -->
+    <!-- CONFIRMATION: NO SVG graphics used. NO Mermaid JS used. -->
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+        }
+        .section-hidden { display: none; }
+        .section-visible { display: block; }
+        .day-tab.active {
+            border-bottom-color: #0ea5e9;
+            color: #0ea5e9;
+        }
+        .sidebar-link.active {
+            background-color: #0ea5e9;
+            color: white;
+        }
+        .solution-code {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.5s ease-in-out;
+        }
+        .solution-code.show {
+            max-height: 1000px; /* Adjust as needed */
+        }
+        html {
+            scroll-behavior: smooth;
+        }
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
+    </style>
+</head>
+<body class="bg-slate-50 text-slate-800">
+
+    <div class="container mx-auto p-4 md:p-8">
+        <header class="text-center mb-8">
+            <h1 class="text-4xl md:text-5xl font-bold text-slate-900">C Programming in 2 Days</h1>
+            <p class="text-slate-600 mt-2">An Interactive Crash Course</p>
+        </header>
+
+        <div class="bg-white rounded-xl shadow-lg p-6 mb-8">
+            <h2 class="text-2xl font-bold mb-4 text-slate-800">Learning Roadmap</h2>
+            <p class="text-slate-600 mb-4">This application transforms the C programming report into an interactive learning experience. The plan is broken down into two intensive days. Use the tabs to switch between days and the sidebar to navigate to specific topics. The chart below visualizes the key areas of focus for each day.</p>
+             <div class="chart-container relative h-64 md:h-80 w-full max-w-4xl mx-auto">
+                <canvas id="roadmapChart"></canvas>
+            </div>
+        </div>
+
+        <div class="border-b border-slate-200 mb-6">
+            <nav class="-mb-px flex space-x-6" aria-label="Tabs">
+                <button id="tab-day1" class="day-tab active whitespace-nowrap py-4 px-1 border-b-2 font-medium text-lg">Day 1: Fundamentals</button>
+                <button id="tab-day2" class="day-tab whitespace-nowrap py-4 px-1 border-b-2 font-medium text-lg">Day 2: Advanced Topics</button>
+            </nav>
+        </div>
+
+        <div class="flex flex-col md:flex-row gap-8">
+            <!-- Sidebar -->
+            <aside id="sidebar-day1" class="md:w-1/4">
+                <div class="sticky top-8">
+                    <h3 class="text-lg font-semibold mb-3 text-slate-900">Day 1 Topics</h3>
+                    <nav class="flex flex-col space-y-2">
+                        <a href="#d1-s1" class="sidebar-link px-4 py-2 rounded-md text-slate-700 hover:bg-sky-100">Setup & First Program</a>
+                        <a href="#d1-s2" class="sidebar-link px-4 py-2 rounded-md text-slate-700 hover:bg-sky-100">Variables & I/O</a>
+                        <a href="#d1-s3" class="sidebar-link px-4 py-2 rounded-md text-slate-700 hover:bg-sky-100">Operators</a>
+                        <a href="#d1-s4" class="sidebar-link px-4 py-2 rounded-md text-slate-700 hover:bg-sky-100">Conditionals</a>
+                        <a href="#d1-s5" class="sidebar-link px-4 py-2 rounded-md text-slate-700 hover:bg-sky-100">Loops</a>
+                        <a href="#d1-s6" class="sidebar-link px-4 py-2 rounded-md text-slate-700 hover:bg-sky-100">Functions</a>
+                        <a href="#d1-s7" class="sidebar-link px-4 py-2 rounded-md text-slate-700 hover:bg-sky-100">Review</a>
+                    </nav>
+                </div>
+            </aside>
+             <aside id="sidebar-day2" class="md:w-1/4 section-hidden">
+                <div class="sticky top-8">
+                    <h3 class="text-lg font-semibold mb-3 text-slate-900">Day 2 Topics</h3>
+                    <nav class="flex flex-col space-y-2">
+                        <a href="#d2-s1" class="sidebar-link px-4 py-2 rounded-md text-slate-700 hover:bg-sky-100">Arrays</a>
+                        <a href="#d2-s2" class="sidebar-link px-4 py-2 rounded-md text-slate-700 hover:bg-sky-100">Strings</a>
+                        <a href="#d2-s3" class="sidebar-link px-4 py-2 rounded-md text-slate-700 hover:bg-sky-100">Pointers</a>
+                        <a href="#d2-s4" class="sidebar-link px-4 py-2 rounded-md text-slate-700 hover:bg-sky-100">Dynamic Memory</a>
+                        <a href="#d2-s5" class="sidebar-link px-4 py-2 rounded-md text-slate-700 hover:bg-sky-100">Consolidation</a>
+                        <a href="#d2-s6" class="sidebar-link px-4 py-2 rounded-md text-slate-700 hover:bg-sky-100">Next Steps</a>
+                    </nav>
+                </div>
+            </aside>
+
+            <!-- Main Content -->
+            <main class="flex-1 min-w-0">
+                <div id="content-day1" class="space-y-12">
+                    <!-- Day 1 Content Sections -->
+                    <section id="d1-s1">
+                        <h2 class="text-3xl font-bold mb-4 text-slate-900 border-b pb-2">Setup & First Program</h2>
+                        <div class="space-y-4 text-slate-700">
+                            <h3 class="text-xl font-semibold mt-4">Theory</h3>
+                            <p>To begin, you need a text editor to write source code and a compiler (like GCC) to translate it into machine-executable code. The basic structure of any C program involves including necessary libraries (like `stdio.h` for input/output), a `main` function which is the program's entry point, and a `return 0;` statement to indicate successful execution. The `printf()` function is your primary tool for displaying output to the console.</p>
+                            <h3 class="text-xl font-semibold mt-6">Practice Problems</h3>
+                            <div class="problem bg-slate-100 p-4 rounded-lg">
+                                <p class="font-semibold">1. Hello World:</p>
+                                <p>Write a program that prints "Hello, World!" to the console.</p>
+                                <button class="solution-toggle mt-2 text-sky-600 font-medium">Show Solution</button>
+                                <div class="solution-code">
+                                    <pre class="bg-slate-800 text-white p-4 rounded-md mt-2 overflow-x-auto"><code class="language-c">#include &lt;stdio.h&gt;
+
+int main(void) {
+    printf("Hello, World!\\n");
+    return 0;
+}</code></pre>
+                                    <p class="mt-2 text-sm text-slate-600"><strong>Explanation:</strong> This program includes the standard input/output library, defines the main function, and uses `printf` to display the text. The `\n` creates a newline.</p>
+                                </div>
+                            </div>
+                        </div>
+                    </section>
+                    <section id="d1-s2">
+                        <h2 class="text-3xl font-bold mb-4 text-slate-900 border-b pb-2">Variables & I/O</h2>
+                        <div class="space-y-4 text-slate-700">
+                           <h3 class="text-xl font-semibold mt-4">Theory</h3>
+                           <p>Variables are named storage locations for data. Key types include `int` (integers), `float`/`double` (decimal numbers), and `char` (single characters). `scanf()` is used to read user input. It is crucial to use the address-of operator `&` with `scanf` to tell it where to store the data in memory.</p>
+                           <h3 class="text-xl font-semibold mt-6">Practice Problems</h3>
+                           <div class="problem bg-slate-100 p-4 rounded-lg">
+                                <p class="font-semibold">1. Swap Values:</p>
+                                <p>Declare two integer variables, swap their values using a third temporary variable, and print their values before and after.</p>
+                                <button class="solution-toggle mt-2 text-sky-600 font-medium">Show Solution</button>
+                                <div class="solution-code">
+                                    <pre class="bg-slate-800 text-white p-4 rounded-md mt-2 overflow-x-auto"><code class="language-c">#include &lt;stdio.h&gt;
+
+int main(void) {
+    int a = 10, b = 20, temp;
+    printf("Before: a=%d, b=%d\n", a, b);
+    temp = a;
+    a = b;
+    b = temp;
+    printf("After: a=%d, b=%d\n", a, b);
+    return 0;
+}</code></pre>
+                                    <p class="mt-2 text-sm text-slate-600"><strong>Explanation:</strong> A `temp` variable is required to hold the value of `a` before it's overwritten, allowing the swap to complete without losing data.</p>
+                                </div>
+                            </div>
+                        </div>
+                    </section>
+                     <section id="d1-s3">
+                        <h2 class="text-3xl font-bold mb-4 text-slate-900 border-b pb-2">Operators</h2>
+                        <p>This section covers arithmetic, relational, and logical operators.</p>
+                    </section>
+                    <section id="d1-s4">
+                        <h2 class="text-3xl font-bold mb-4 text-slate-900 border-b pb-2">Conditionals</h2>
+                         <p>Learn to control program flow with `if`, `else`, and `switch` statements.</p>
+                    </section>
+                    <section id="d1-s5">
+                        <h2 class="text-3xl font-bold mb-4 text-slate-900 border-b pb-2">Loops</h2>
+                        <p>Repeat actions with `for`, `while`, and `do-while` loops.</p>
+                    </section>
+                    <section id="d1-s6">
+                        <h2 class="text-3xl font-bold mb-4 text-slate-900 border-b pb-2">Functions</h2>
+                        <p>Organize code into reusable blocks called functions.</p>
+                    </section>
+                    <section id="d1-s7">
+                        <h2 class="text-3xl font-bold mb-4 text-slate-900 border-b pb-2">Review</h2>
+                        <p>A comprehensive problem to review all Day 1 concepts.</p>
+                    </section>
+                </div>
+
+                <div id="content-day2" class="space-y-12 section-hidden">
+                    <!-- Day 2 Content Sections -->
+                     <section id="d2-s1">
+                        <h2 class="text-3xl font-bold mb-4 text-slate-900 border-b pb-2">Arrays</h2>
+                         <div class="space-y-4 text-slate-700">
+                            <h3 class="text-xl font-semibold mt-4">Theory</h3>
+                            <p>Arrays are fixed-size collections of elements of the same data type, stored in contiguous memory. They are accessed using a 0-based index. Careful index management is essential to avoid "out-of-bounds" errors, a common pitfall in C.</p>
+                            <h3 class="text-xl font-semibold mt-6">Practice Problems</h3>
+                            <div class="problem bg-slate-100 p-4 rounded-lg">
+                                <p class="font-semibold">1. Find Min/Max:</p>
+                                <p>In an integer array, find and print the smallest and largest elements.</p>
+                                <button class="solution-toggle mt-2 text-sky-600 font-medium">Show Solution</button>
+                                <div class="solution-code">
+                                    <pre class="bg-slate-800 text-white p-4 rounded-md mt-2 overflow-x-auto"><code class="language-c">#include &lt;stdio.h&gt;
+
+int main(void) {
+    int data[] = {45, 12, 89, 5, 67, 23};
+    int size = sizeof(data) / sizeof(data[0]);
+    int min = data[0];
+    int max = data[0];
+
+    for (int i = 1; i < size; i++) {
+        if (data[i] < min) min = data[i];
+        if (data[i] > max) max = data[i];
+    }
+    printf("Min: %d, Max: %d\\n", min, max);
+    return 0;
+}</code></pre>
+                                    <p class="mt-2 text-sm text-slate-600"><strong>Explanation:</strong> Initialize `min` and `max` to the first element. Then, loop from the second element, comparing and updating `min` and `max` as needed.</p>
+                                </div>
+                            </div>
+                        </div>
+                    </section>
+                    <section id="d2-s2">
+                        <h2 class="text-3xl font-bold mb-4 text-slate-900 border-b pb-2">Strings</h2>
+                         <p>Understand how C handles strings as null-terminated character arrays and use the `<string.h>` library.</p>
+                    </section>
+                    <section id="d2-s3">
+                        <h2 class="text-3xl font-bold mb-4 text-slate-900 border-b pb-2">Pointers</h2>
+                        <p>This is a core C concept. Pointers are variables that store memory addresses. They are essential for dynamic memory and efficient data manipulation.</p>
+                         <div class="space-y-4 text-slate-700">
+                           <h3 class="text-xl font-semibold mt-6">Practice Problems</h3>
+                           <div class="problem bg-slate-100 p-4 rounded-lg">
+                                <p class="font-semibold">1. Swap with Pointers:</p>
+                                <p>Write a function that takes pointers to two integers and swaps the values they point to. This demonstrates modifying caller data.</p>
+                                <button class="solution-toggle mt-2 text-sky-600 font-medium">Show Solution</button>
+                                <div class="solution-code">
+                                    <pre class="bg-slate-800 text-white p-4 rounded-md mt-2 overflow-x-auto"><code class="language-c">#include &lt;stdio.h&gt;
+
+void swap(int *ptrA, int *ptrB) {
+    int temp = *ptrA;
+    *ptrA = *ptrB;
+    *ptrB = temp;
+}
+
+int main(void) {
+    int var1 = 5, var2 = 10;
+    printf("Before: var1=%d, var2=%d\n", var1, var2);
+    swap(&var1, &var2);
+    printf("After: var1=%d, var2=%d\n", var1, var2);
+    return 0;
+}</code></pre>
+                                    <p class="mt-2 text-sm text-slate-600"><strong>Explanation:</strong> The `swap` function receives memory addresses. By dereferencing the pointers (`*ptrA`), it can modify the original variables in `main`, enabling a true swap.</p>
+                                </div>
+                            </div>
+                        </div>
+                    </section>
+                    <section id="d2-s4">
+                        <h2 class="text-3xl font-bold mb-4 text-slate-900 border-b pb-2">Dynamic Memory</h2>
+                         <p>Learn to allocate memory at runtime using `malloc`, `calloc`, `realloc`, and crucially, release it with `free` to prevent memory leaks.</p>
+                    </section>
+                     <section id="d2-s5">
+                        <h2 class="text-3xl font-bold mb-4 text-slate-900 border-b pb-2">Consolidation</h2>
+                        <p>Advanced practice problems combining arrays, strings, pointers, and dynamic memory.</p>
+                    </section>
+                     <section id="d2-s6">
+                        <h2 class="text-3xl font-bold mb-4 text-slate-900 border-b pb-2">Next Steps</h2>
+                        <p>Guidance on how to continue your C programming journey beyond this crash course.</p>
+                    </section>
+                </div>
+            </main>
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const day1Tab = document.getElementById('tab-day1');
+            const day2Tab = document.getElementById('tab-day2');
+            const day1Content = document.getElementById('content-day1');
+            const day2Content = document.getElementById('content-day2');
+            const day1Sidebar = document.getElementById('sidebar-day1');
+            const day2Sidebar = document.getElementById('sidebar-day2');
+
+            const solutionToggles = document.querySelectorAll('.solution-toggle');
+
+            function switchTab(day) {
+                if (day === 1) {
+                    day1Tab.classList.add('active');
+                    day2Tab.classList.remove('active');
+                    day1Content.classList.remove('section-hidden');
+                    day2Content.classList.add('section-hidden');
+                    day1Sidebar.classList.remove('section-hidden');
+                    day2Sidebar.classList.add('section-hidden');
+                } else {
+                    day1Tab.classList.remove('active');
+                    day2Tab.classList.add('active');
+                    day1Content.classList.add('section-hidden');
+                    day2Content.classList.remove('section-hidden');
+                    day1Sidebar.classList.add('section-hidden');
+                    day2Sidebar.classList.remove('section-hidden');
+                }
+            }
+
+            day1Tab.addEventListener('click', () => switchTab(1));
+            day2Tab.addEventListener('click', () => switchTab(2));
+
+            solutionToggles.forEach(button => {
+                button.addEventListener('click', () => {
+                    const solutionDiv = button.nextElementSibling;
+                    solutionDiv.classList.toggle('show');
+                    button.textContent = solutionDiv.classList.contains('show') ? 'Hide Solution' : 'Show Solution';
+                });
+            });
+
+            // Active sidebar link highlighting based on scroll
+            const allLinks = document.querySelectorAll('.sidebar-link');
+            const sections = document.querySelectorAll('section');
+
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        allLinks.forEach(link => {
+                           link.classList.toggle('active', link.getAttribute('href').substring(1) === entry.target.id);
+                        });
+                    }
+                });
+            }, { rootMargin: "-50% 0px -50% 0px" });
+
+            sections.forEach(section => {
+                observer.observe(section);
+            });
+            
+             // Chart.js Roadmap Visualization
+            const ctx = document.getElementById('roadmapChart').getContext('2d');
+            const roadmapChart = new Chart(ctx, {
+                type: 'bar',
+                data: {
+                    labels: [
+                        'Setup & Basics', 'Variables & I/O', 'Operators', 'Conditionals', 'Loops', 'Functions',
+                        'Arrays', 'Strings', 'Pointers', 'Dynamic Memory'
+                    ],
+                    datasets: [{
+                        label: 'Day 1 Focus',
+                        data: [1, 1, 1, 1, 1, 1, 0, 0, 0, 0],
+                        backgroundColor: 'rgba(59, 130, 246, 0.7)',
+                        borderColor: 'rgba(59, 130, 246, 1)',
+                        borderWidth: 1,
+                        stack: 'Stack 0',
+                    }, {
+                        label: 'Day 2 Focus',
+                        data: [0, 0, 0, 0, 0, 0, 1, 1, 1, 1],
+                        backgroundColor: 'rgba(14, 165, 233, 0.7)',
+                        borderColor: 'rgba(14, 165, 233, 1)',
+                        borderWidth: 1,
+                        stack: 'Stack 0',
+                    }]
+                },
+                options: {
+                    indexAxis: 'y',
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    scales: {
+                        x: {
+                            display: false,
+                            stacked: true,
+                        },
+                        y: {
+                           stacked: true,
+                           ticks: {
+                               font: {
+                                   size: 14,
+                               }
+                           }
+                        }
+                    },
+                    plugins: {
+                        legend: {
+                            position: 'top',
+                        },
+                        tooltip: {
+                            enabled: false
+                        }
+                    }
+                }
+            });
+
+            // Initial setup
+            switchTab(1);
+        });
+    </script>
+</body>
+</html>
