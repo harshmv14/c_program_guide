@@ -1,0 +1,924 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>C Programming Coding Practice</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #f0f2f5;
+            display: flex;
+            justify-content: center;
+            align-items: flex-start;
+            min-height: 100vh;
+            padding: 20px;
+            box-sizing: border-box;
+        }
+        .container {
+            background-color: #ffffff;
+            padding: 30px;
+            border-radius: 12px;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+            max-width: 900px;
+            width: 100%;
+        }
+        pre {
+            background-color: #f8f8f8;
+            border: 1px solid #e0e0e0;
+            padding: 15px;
+            border-radius: 8px;
+            overflow-x: auto;
+            font-size: 0.9em;
+            line-height: 1.4;
+            color: #333;
+        }
+        .code-block {
+            margin-bottom: 25px;
+            padding: 20px;
+            border: 1px solid #dcdcdc;
+            border-radius: 10px;
+            background-color: #fff;
+        }
+        .problem-title {
+            font-weight: 600;
+            color: #2c3e50;
+            margin-bottom: 10px;
+            font-size: 1.1em;
+        }
+        .solution-container {
+            margin-top: 15px;
+            background-color: #ecf7ed;
+            border-left: 5px solid #4CAF50;
+            padding: 12px;
+            border-radius: 6px;
+        }
+        .solution-text {
+            color: #2e7d32;
+            font-weight: 500;
+        }
+        .toggle-button {
+            background-color: #3498db;
+            color: white;
+            padding: 8px 15px;
+            border-radius: 8px;
+            transition: background-color 0.3s ease;
+            cursor: pointer;
+            margin-top: 10px;
+            font-size: 0.9em;
+            display: inline-block;
+        }
+        .toggle-button:hover {
+            background-color: #2980b9;
+        }
+        h1 {
+            color: #2c3e50;
+            font-size: 2.2em;
+            font-weight: 700;
+            text-align: center;
+            margin-bottom: 20px;
+        }
+        h2 {
+            color: #2c3e50;
+            font-size: 1.8em;
+            font-weight: 700;
+            margin-top: 30px;
+            margin-bottom: 15px;
+            border-bottom: 2px solid #e0e0e0;
+            padding-bottom: 5px;
+        }
+        h3 {
+            color: #34495e;
+            font-size: 1.4em;
+            font-weight: 600;
+            margin-top: 20px;
+            margin-bottom: 10px;
+        }
+        p {
+            color: #555;
+            margin-bottom: 15px;
+            line-height: 1.6;
+        }
+        ul {
+            list-style-type: disc;
+            margin-left: 20px;
+            margin-bottom: 15px;
+            color: #555;
+        }
+        ol {
+            list-style-type: decimal;
+            margin-left: 20px;
+            margin-bottom: 15px;
+            color: #555;
+        }
+        code {
+            background-color: #e9e9e9;
+            padding: 2px 5px;
+            border-radius: 4px;
+            font-family: 'Courier New', Courier, monospace;
+            font-size: 0.9em;
+        }
+        .hidden {
+            display: none;
+        }
+        .back-button {
+            display: inline-block;
+            background-color: #607d8b; /* Slate grey */
+            color: white;
+            padding: 10px 20px;
+            border-radius: 8px;
+            text-decoration: none;
+            font-size: 1em;
+            margin-bottom: 25px;
+            transition: background-color 0.3s ease;
+        }
+        .back-button:hover {
+            background-color: #455a64;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <a href="index.html" class="back-button">&larr; Back to Home</a>
+
+        <h1>C Programming Coding Practice</h1>
+        <p>This page is designed to help you hone your C programming skills through a series of hands-on coding problems. The questions are organized by topic, starting from fundamental concepts and gradually increasing in complexity. Each problem requires careful thought and implementation to arrive at a correct solution.</p>
+        <p>Try to solve each problem on your own before revealing the suggested solution. Happy coding!</p>
+
+        <!-- Variables, Data Types, and Operators -->
+        <section>
+            <h2>1. Variables, Data Types, and Operators</h2>
+            <div id="var-op-code-writing-container"></div>
+        </section>
+
+        <hr class="my-8 border-t-2 border-gray-200">
+
+        <!-- Conditional Statements (if-else, switch) -->
+        <section>
+            <h2>2. Conditional Statements</h2>
+            <div id="conditional-code-writing-container"></div>
+        </section>
+
+        <hr class="my-8 border-t-2 border-gray-200">
+
+        <!-- Loops (for, while, do-while) -->
+        <section>
+            <h2>3. Loops</h2>
+            <div id="loops-code-writing-container"></div>
+        </section>
+
+        <hr class="my-8 border-t-2 border-gray-200">
+
+        <!-- Functions -->
+        <section>
+            <h2>4. Functions</h2>
+            <div id="functions-code-writing-container"></div>
+        </section>
+
+        <hr class="my-8 border-t-2 border-gray-200">
+
+        <!-- Arrays -->
+        <section>
+            <h2>5. Arrays</h2>
+            <div id="arrays-code-writing-container"></div>
+        </section>
+
+        <hr class="my-8 border-t-2 border-gray-200">
+
+        <!-- Pointers (Basic Level) -->
+        <section>
+            <h2>6. Pointers (Basic Level)</h2>
+            <div id="pointers-code-writing-container"></div>
+        </section>
+
+    </div>
+
+    <script>
+        // Helper function to create and append problem blocks
+        function createProblemBlock(containerId, q, index) {
+            const container = document.getElementById(containerId);
+            const block = document.createElement('div');
+            block.className = 'code-block';
+
+            block.innerHTML = `
+                <div class="problem-title">Problem ${index + 1}: ${q.title}</div>
+                <p>${q.problem}</p>
+                <button class="toggle-button" onclick="toggleContent('solution-${containerId}-${index}', this)">Show Solution</button>
+                <div id="solution-${containerId}-${index}" class="solution-container hidden">
+                    <div class="solution-text">Suggested Solution:</div>
+                    <pre><code>${q.solution}</code></pre>
+                </div>
+            `;
+            container.appendChild(block);
+        }
+
+        // Helper function to toggle visibility
+        function toggleContent(id, button) {
+            const contentDiv = document.getElementById(id);
+            contentDiv.classList.toggle('hidden');
+            if (contentDiv.classList.contains('hidden')) {
+                button.textContent = button.textContent.replace('Hide', 'Show');
+            } else {
+                button.textContent = button.textContent.replace('Show', 'Hide');
+            }
+        }
+
+        // --- Questions Data ---
+
+        // 1. Variables, Data Types, and Operators
+        const varOpCodeWritingProblems = [
+            {
+                title: "Calculate BMI (Body Mass Index)",
+                problem: `Write a C program that prompts the user to enter their weight in kilograms (float) and height in meters (float). Calculate their Body Mass Index (BMI) using the formula: \`BMI = weight / (height * height)\`. Print the BMI rounded to two decimal places.`,
+                solution: `#include <stdio.h>
+
+int main() {
+    float weight_kg, height_m, bmi;
+
+    printf("Enter your weight in kilograms (e.g., 70.5): ");
+    scanf("%f", &weight_kg);
+
+    printf("Enter your height in meters (e.g., 1.75): ");
+    scanf("%f", &height_m);
+
+    if (height_m <= 0) {
+        printf("Error: Height cannot be zero or negative.\\n");
+        return 1;
+    }
+
+    bmi = weight_kg / (height_m * height_m);
+
+    printf("Your BMI is: %.2f\\n", bmi);
+    return 0;
+}`
+            },
+            {
+                title: "Convert Days to Years, Weeks, Days",
+                problem: `Write a C program that takes a total number of days (integer) as input. Convert and print this total into an equivalent number of years, weeks, and remaining days. Assume 365 days in a year.`,
+                solution: `#include <stdio.h>
+
+int main() {
+    int total_days, years, weeks, remaining_days;
+
+    printf("Enter total number of days: ");
+    scanf("%d", &total_days);
+
+    if (total_days < 0) {
+        printf("Please enter a non-negative number of days.\\n");
+        return 1;
+    }
+
+    years = total_days / 365;
+    remaining_days = total_days % 365;
+
+    weeks = remaining_days / 7;
+    remaining_days = remaining_days % 7;
+
+    printf("%d days is equivalent to:\\n", total_days);
+    printf("Years: %d\\n", years);
+    printf("Weeks: %d\\n", weeks);
+    printf("Days: %d\\n", remaining_days);
+
+    return 0;
+}`
+            },
+            {
+                title: "Convert Total Seconds to HH:MM:SS",
+                problem: `Write a C program that takes a total number of seconds (integer) as input. Convert and print this total into hours, minutes, and remaining seconds in \`HH:MM:SS\` format.`,
+                solution: `#include <stdio.h>
+
+int main() {
+    int total_seconds, hours, minutes, seconds;
+
+    printf("Enter total seconds: ");
+    scanf("%d", &total_seconds);
+
+    if (total_seconds < 0) {
+        printf("Please enter a non-negative number of seconds.\\n");
+        return 1;
+    }
+
+    hours = total_seconds / 3600;         // 1 hour = 3600 seconds
+    total_seconds %= 3600;                // Remaining seconds after extracting hours
+
+    minutes = total_seconds / 60;         // 1 minute = 60 seconds
+    seconds = total_seconds % 60;         // Remaining seconds after extracting minutes
+
+    printf("Time: %02d:%02d:%02d\\n", hours, minutes, seconds); // %02d for leading zeros
+    return 0;
+}`
+            }
+        ];
+
+        // 2. Conditional Statements
+        const conditionalCodeWritingProblems = [
+            {
+                title: "Character Type Identifier",
+                problem: `Write a C program that takes a single character input from the user. Determine and print whether the character is an "Alphabet" (a-z, A-Z), a "Digit" (0-9), or a "Special Character".`,
+                solution: `#include <stdio.h>
+#include <ctype.h> // For isalpha(), isdigit()
+
+int main() {
+    char ch;
+    printf("Enter a character: ");
+    scanf(" %c", &ch); // Space before %c to consume any leftover newline
+
+    if (isalpha(ch)) {
+        printf("'%c' is an Alphabet.\\n", ch);
+    } else if (isdigit(ch)) {
+        printf("'%c' is a Digit.\\n", ch);
+    } else {
+        printf("'%c' is a Special Character.\\n", ch);
+    }
+    return 0;
+}`
+            },
+            {
+                title: "Simple Unit Converter",
+                problem: `Write a C program that acts as a simple unit converter. Provide a menu for the user to choose between:
+                1. Convert Centimeters to Inches (1 inch = 2.54 cm)
+                2. Convert Inches to Centimeters
+                Based on the choice, ask for the value and print the converted result. Handle invalid choices.`,
+                solution: `#include <stdio.h>
+
+int main() {
+    int choice;
+    float value, converted_value;
+    const float CM_TO_INCH = 2.54;
+
+    printf("Unit Converter Menu:\\n");
+    printf("1. Centimeters to Inches\\n");
+    printf("2. Inches to Centimeters\\n");
+    printf("Enter your choice (1 or 2): ");
+    scanf("%d", &choice);
+
+    switch (choice) {
+        case 1:
+            printf("Enter value in Centimeters: ");
+            scanf("%f", &value);
+            converted_value = value / CM_TO_INCH;
+            printf("%.2f cm = %.2f inches\\n", value, converted_value);
+            break;
+        case 2:
+            printf("Enter value in Inches: ");
+            scanf("%f", &value);
+            converted_value = value * CM_TO_INCH;
+            printf("%.2f inches = %.2f cm\\n", value, converted_value);
+            break;
+        default:
+            printf("Invalid choice. Please enter 1 or 2.\\n");
+            break;
+    }
+    return 0;
+}`
+            },
+            {
+                title: "Movie Ticket Pricing",
+                problem: `Write a C program that calculates the movie ticket price based on age:
+                - Below 5: Free
+                - 5 to 12: \$5.00
+                - 13 to 64: \$10.00
+                - 65 and above: \$7.00 (senior discount)
+                Take age as input and print the corresponding ticket price. Handle invalid age inputs.`,
+                solution: `#include <stdio.h>
+
+int main() {
+    int age;
+    float ticket_price;
+
+    printf("Enter your age: ");
+    scanf("%d", &age);
+
+    if (age < 0 || age > 120) { // Assuming reasonable age range
+        printf("Invalid age. Please enter a valid age.\\n");
+        return 1;
+    } else if (age < 5) {
+        ticket_price = 0.00;
+    } else if (age <= 12) {
+        ticket_price = 5.00;
+    } else if (age <= 64) {
+        ticket_price = 10.00;
+    } else { // age >= 65
+        ticket_price = 7.00;
+    }
+
+    printf("Your movie ticket price is: \$%.2f\\n", ticket_price);
+    return 0;
+}`
+            }
+        ];
+
+        // 3. Loops
+        const loopsCodeWritingProblems = [
+            {
+                title: "Print Hollow Square Pattern",
+                problem: `Write a C program that takes an integer N as input from the user and prints a hollow square pattern of \`*\` and spaces of size NxN.
+                Example for N = 4:
+                ****
+                * *
+                * *
+                ****`,
+                solution: `#include <stdio.h>
+
+int main() {
+    int N;
+    printf("Enter the size of the square (N): ");
+    scanf("%d", &N);
+
+    if (N <= 0) {
+        printf("Please enter a positive integer for size.\\n");
+        return 1;
+    }
+
+    for (int i = 1; i <= N; i++) { // Loop for rows
+        for (int j = 1; j <= N; j++) { // Loop for columns
+            // Print '*' for first/last row or first/last column
+            if (i == 1 || i == N || j == 1 || j == N) {
+                printf("*");
+            } else {
+                printf(" "); // Print space for inner part
+            }
+        }
+        printf("\\n"); // Move to next line after each row
+    }
+    return 0;
+}`
+            },
+            {
+                title: "Check Armstrong Number",
+                problem: `Write a C program that takes a 3-digit integer from the user and checks if it's an Armstrong number. An Armstrong number is a number that is equal to the sum of cubes of its digits. For example, 153 is an Armstrong number because \$1^3 + 5^3 + 3^3 = 1 + 125 + 27 = 153\$.`,
+                solution: `#include <stdio.h>
+#include <math.h> // For pow function
+
+int main() {
+    int num, originalNum, remainder, result = 0, n = 0;
+
+    printf("Enter a 3-digit integer: ");
+    scanf("%d", &num);
+
+    if (num < 100 || num > 999) {
+        printf("Please enter a valid 3-digit number.\\n");
+        return 1;
+    }
+
+    originalNum = num;
+
+    // Count number of digits (for generalized Armstrong, though problem specifies 3)
+    // For a 3-digit number, we know n=3, but this makes it more general
+    int temp = originalNum;
+    while (temp != 0) {
+        temp /= 10;
+        ++n;
+    }
+
+    temp = originalNum; // Reset temp for calculation
+    while (temp != 0) {
+        remainder = temp % 10;
+        result += pow(remainder, n); // Sum of (digit ^ n)
+        temp /= 10;
+    }
+
+    if (result == originalNum) {
+        printf("%d is an Armstrong number.\\n", originalNum);
+    } else {
+        printf("%d is not an Armstrong number.\\n", originalNum);
+    }
+    return 0;
+}`
+            },
+            {
+                title: "Find Prime Factors",
+                problem: `Write a C program that takes a positive integer as input and prints all its prime factors. For example, if the input is 12, the prime factors are 2, 2, 3.`,
+                solution: `#include <stdio.h>
+
+int main() {
+    int num, i;
+
+    printf("Enter a positive integer: ");
+    scanf("%d", &num);
+
+    if (num <= 1) {
+        printf("Please enter an integer greater than 1.\\n");
+        return 1;
+    }
+
+    printf("Prime factors of %d are: ", num);
+
+    // Divide by 2 until it's odd
+    while (num % 2 == 0) {
+        printf("2 ");
+        num /= 2;
+    }
+
+    // Check for odd factors from 3 onwards
+    for (i = 3; i * i <= num; i = i + 2) {
+        while (num % i == 0) {
+            printf("%d ", i);
+            num /= i;
+        }
+    }
+
+    // If num is still greater than 1, it must be a prime factor itself
+    if (num > 1) {
+        printf("%d ", num);
+    }
+    printf("\\n");
+    return 0;
+}`
+            }
+        ];
+
+        // 4. Functions
+        const functionsCodeWritingProblems = [
+            {
+                title: "Calculate GCD (Greatest Common Divisor)",
+                problem: `Write a C function named \`gcd\` that takes two positive integers as arguments and returns their Greatest Common Divisor (GCD) using the Euclidean algorithm. In \`main\`, take two numbers from the user and print their GCD using this function.`,
+                solution: `#include <stdio.h>
+
+// Function to calculate GCD using Euclidean algorithm
+int gcd(int a, int b) {
+    while (b != 0) {
+        int temp = b;
+        b = a % b;
+        a = temp;
+    }
+    return a;
+}
+
+int main() {
+    int num1, num2;
+    printf("Enter two positive integers: ");
+    scanf("%d %d", &num1, &num2);
+
+    if (num1 <= 0 || num2 <= 0) {
+        printf("Please enter positive integers.\\n");
+        return 1;
+    }
+
+    printf("GCD of %d and %d is: %d\\n", num1, num2, gcd(num1, num2));
+    return 0;
+}`
+            },
+            {
+                title: "Temperature Conversion Functions",
+                problem: `Write two C functions:
+                1. \`float celsiusToFahrenheit(float celsius)\`: Converts Celsius to Fahrenheit.
+                2. \`float fahrenheitToCelsius(float fahrenheit)\`: Converts Fahrenheit to Celsius.
+                In \`main\`, demonstrate both conversions by taking user input for one unit and printing the converted value in the other.`,
+                solution: `#include <stdio.h>
+
+// Function to convert Celsius to Fahrenheit
+float celsiusToFahrenheit(float celsius) {
+    return (celsius * 9.0 / 5.0) + 32.0;
+}
+
+// Function to convert Fahrenheit to Celsius
+float fahrenheitToCelsius(float fahrenheit) {
+    return (fahrenheit - 32.0) * 5.0 / 9.0;
+}
+
+int main() {
+    float temp_c, temp_f;
+
+    printf("Enter temperature in Celsius: ");
+    scanf("%f", &temp_c);
+    printf("%.2f Celsius is %.2f Fahrenheit.\\n", temp_c, celsiusToFahrenheit(temp_c));
+
+    printf("Enter temperature in Fahrenheit: ");
+    scanf("%f", &temp_f);
+    printf("%.2f Fahrenheit is %.2f Celsius.\\n", temp_f, fahrenheitToCelsius(temp_f));
+
+    return 0;
+}`
+            },
+            {
+                title: "Palindrome Checker Function",
+                problem: `Write a C function \`int isPalindromeString(char *str)\` that takes a string (character array) as input and returns 1 if the string is a palindrome, and 0 otherwise. Do not use built-in string functions like \`strlen\` or \`strcmp\`. You will need to calculate the length manually. In \`main\`, test this function with a few example strings.`,
+                solution: `#include <stdio.h>
+
+// Helper function to get string length manually
+int getStringLength(char *s) {
+    int length = 0;
+    while (s[length] != '\\0') {
+        length++;
+    }
+    return length;
+}
+
+// Function to check if a string is a palindrome
+int isPalindromeString(char *str) {
+    int length = getStringLength(str);
+    if (length <= 1) { // Single character or empty string is a palindrome
+        return 1;
+    }
+
+    int left = 0;
+    int right = length - 1;
+
+    while (left < right) {
+        if (str[left] != str[right]) {
+            return 0; // Not a palindrome
+        }
+        left++;
+        right--;
+    }
+    return 1; // It is a palindrome
+}
+
+int main() {
+    char s1[] = "madam";
+    char s2[] = "hello";
+    char s3[] = "racecar";
+    char s4[] = "a";
+    char s5[] = "";
+
+    printf("'%s' is a palindrome: %s\\n", s1, isPalindromeString(s1) ? "Yes" : "No");
+    printf("'%s' is a palindrome: %s\\n", s2, isPalindromeString(s2) ? "Yes" : "No");
+    printf("'%s' is a palindrome: %s\\n", s3, isPalindromeString(s3) ? "Yes" : "No");
+    printf("'%s' is a palindrome: %s\\n", s4, isPalindromeString(s4) ? "Yes" : "No");
+    printf("'%s' is a palindrome: %s\\n", s5, isPalindromeString(s5) ? "Yes" : "No");
+
+    return 0;
+}`
+            }
+        ];
+
+        // 5. Arrays
+        const arraysCodeWritingProblems = [
+            {
+                title: "Merge Two Sorted Arrays",
+                problem: `Write a C program that takes two pre-sorted integer arrays (e.g., \`arr1 = {1, 3, 5}\` and \`arr2 = {2, 4, 6}\`). Merge these two arrays into a third array such that the third array is also sorted. Print the merged array. Assume no duplicates for simplicity, but the solution should handle them implicitly.`,
+                solution: `#include <stdio.h>
+
+int main() {
+    int arr1[] = {1, 3, 5, 7, 9};
+    int size1 = sizeof(arr1) / sizeof(arr1[0]);
+
+    int arr2[] = {2, 4, 6, 8, 10};
+    int size2 = sizeof(arr2) / sizeof(arr2[0]);
+
+    int merged_size = size1 + size2;
+    int merged_arr[merged_size];
+
+    int i = 0, j = 0, k = 0;
+
+    // Traverse both arrays
+    while (i < size1 && j < size2) {
+        if (arr1[i] < arr2[j]) {
+            merged_arr[k++] = arr1[i++];
+        } else {
+            merged_arr[k++] = arr2[j++];
+        }
+    }
+
+    // Copy remaining elements of arr1 (if any)
+    while (i < size1) {
+        merged_arr[k++] = arr1[i++];
+    }
+
+    // Copy remaining elements of arr2 (if any)
+    while (j < size2) {
+        merged_arr[k++] = arr2[j++];
+    }
+
+    printf("Merged sorted array: ");
+    for (k = 0; k < merged_size; k++) {
+        printf("%d ", merged_arr[k]);
+    }
+    printf("\\n");
+
+    return 0;
+}`
+            },
+            {
+                title: "Rotate Array by N Positions",
+                problem: `Write a C program that rotates an integer array to the right by N positions. For example, if array is \`{1, 2, 3, 4, 5}\` and N=2, the result should be \`{4, 5, 1, 2, 3}\`. You can either perform the rotation in-place or use a temporary array. Take the array elements and N from the user.`,
+                solution: `#include <stdio.h>
+
+// Function to rotate array to the right by k positions
+void rotateArrayRight(int arr[], int size, int k) {
+    if (size == 0 || k == 0) return;
+
+    k = k % size; // Normalize k if it's larger than size
+
+    // Create a temporary array to store rotated elements
+    int temp[size];
+    int j = 0;
+
+    // Copy last k elements to temp
+    for (int i = size - k; i < size; i++) {
+        temp[j++] = arr[i];
+    }
+
+    // Copy first (size - k) elements to temp
+    for (int i = 0; i < size - k; i++) {
+        temp[j++] = arr[i];
+    }
+
+    // Copy elements back from temp to original array
+    for (int i = 0; i < size; i++) {
+        arr[i] = temp[i];
+    }
+}
+
+int main() {
+    int size, k;
+
+    printf("Enter the size of the array: ");
+    scanf("%d", &size);
+
+    if (size <= 0) {
+        printf("Array size must be positive.\\n");
+        return 1;
+    }
+
+    int arr[size]; // VLAs (Variable Length Arrays) are a C99 feature
+
+    printf("Enter %d integers:\\n", size);
+    for (int i = 0; i < size; i++) {
+        printf("Element %d: ", i + 1);
+        scanf("%d", &arr[i]);
+    }
+
+    printf("Enter number of positions to rotate right: ");
+    scanf("%d", &k);
+
+    printf("Original array: ");
+    for (int i = 0; i < size; i++) {
+        printf("%d ", arr[i]);
+    }
+    printf("\\n");
+
+    rotateArrayRight(arr, size, k);
+
+    printf("Rotated array: ");
+    for (int i = 0; i < size; i++) {
+        printf("%d ", arr[i]);
+    }
+    printf("\\n");
+
+    return 0;
+}`
+            },
+            {
+                title: "Frequency of Array Elements",
+                problem: `Write a C program that takes an integer array (e.g., \`{1, 2, 2, 3, 1, 4, 2}\`). Count the frequency of each unique element in the array and print the element along with its count. You can use a separate array to keep track of visited elements to avoid re-counting.`,
+                solution: `#include <stdio.h>
+
+int main() {
+    int arr[] = {1, 2, 2, 3, 1, 4, 2, 5, 3};
+    int size = sizeof(arr) / sizeof(arr[0]);
+    int visited[size]; // To keep track of visited elements (0 for not visited, 1 for visited)
+
+    // Initialize visited array to all 0s
+    for (int i = 0; i < size; i++) {
+        visited[i] = 0;
+    }
+
+    printf("Element Frequencies:\\n");
+    for (int i = 0; i < size; i++) {
+        // If this element has already been counted, skip it
+        if (visited[i] == 1) {
+            continue;
+        }
+
+        int count = 1; // Count for the current element
+        // Check for occurrences of arr[i] in the rest of the array
+        for (int j = i + 1; j < size; j++) {
+            if (arr[i] == arr[j]) {
+                count++;
+                visited[j] = 1; // Mark as visited
+            }
+        }
+        printf("%d occurs %d time(s)\\n", arr[i], count);
+    }
+    return 0;
+}`
+            }
+        ];
+
+        // 6. Pointers (Basic Level)
+        const pointersCodeWritingProblems = [
+            {
+                title: "Concatenate Two Strings Using Pointers",
+                problem: `Write a C function \`void concatenateStrings(char *dest, char *src)\` that concatenates (joins) the \`src\` string to the end of the \`dest\` string using pointer arithmetic. Do not use strcat from <string.h>. Assume \`dest\` has enough allocated space.`,
+                solution: `#include <stdio.h>
+
+// Function to concatenate two strings using pointers
+void concatenateStrings(char *dest, char *src) {
+    // Move dest pointer to the end of the dest string (before null terminator)
+    while (*dest != '\\0') {
+        dest++;
+    }
+
+    // Copy characters from src to dest
+    while (*src != '\\0') {
+        *dest = *src;
+        dest++;
+        src++;
+    }
+    *dest = '\\0'; // Add the null terminator at the end
+}
+
+int main() {
+    char str1[50] = "Hello"; // Make sure dest has enough capacity
+    char str2[] = " World!";
+
+    printf("Before concatenation:\\n");
+    printf("String 1: \\"%s\\"\\n", str1);
+    printf("String 2: \\"%s\\"\\n", str2);
+
+    concatenateStrings(str1, str2);
+
+    printf("After concatenation:\\n");
+    printf("String 1: \\"%s\\"\\n", str1); // str1 now contains "Hello World!"
+
+    return 0;
+}`
+            },
+            {
+                title: "Implement `strcpy` Using Pointers",
+                problem: `Write a C function \`char* myStrcpy(char *dest, const char *src)\` that copies the string pointed to by \`src\` to the buffer pointed to by \`dest\`. The function should return a pointer to \`dest\`. Do not use the built-in strcpy. Assume \`dest\` has enough allocated space.`,
+                solution: `#include <stdio.h> // For printf
+#include <stddef.h> // For NULL
+
+// Function to implement strcpy using pointers
+char* myStrcpy(char *dest, const char *src) {
+    char *original_dest = dest; // Store the original start of dest
+
+    // Copy characters one by one until the null terminator of src is reached
+    while (*src != '\\0') {
+        *dest = *src;
+        dest++;
+        src++;
+    }
+    *dest = '\\0'; // Add the null terminator to the end of dest
+
+    return original_dest; // Return the original start of dest
+}
+
+int main() {
+    char source[] = "Copy this string!";
+    char destination[50]; // Make sure it's large enough
+
+    printf("Source string: \\"%s\\"\\n", source);
+
+    myStrcpy(destination, source);
+
+    printf("Copied string: \\"%s\\"\\n", destination);
+
+    // Test with an empty string
+    char empty_source[] = "";
+    char empty_destination[10];
+    myStrcpy(empty_destination, empty_source);
+    printf("Copied empty string: \\"%s\\"\\n", empty_destination); // Should print nothing
+
+    return 0;
+}`
+            },
+            {
+                title: "Count Character Occurrences in String (Pointers)",
+                problem: `Write a C function \`int countChar(const char *str, char target_char)\` that takes a string and a character. The function should return the number of times the \`target_char\` appears in the \`str\`. Use pointer arithmetic to traverse the string.`,
+                solution: `#include <stdio.h>
+
+// Function to count character occurrences using pointer arithmetic
+int countChar(const char *str, char target_char) {
+    int count = 0;
+    while (*str != '\\0') { // Loop until the null terminator
+        if (*str == target_char) {
+            count++;
+        }
+        str++; // Move to the next character in the string
+    }
+    return count;
+}
+
+int main() {
+    char text[] = "programming is fun!";
+    char char1 = 'g';
+    char char2 = 'x';
+    char char3 = 'p';
+
+    printf("Occurrences of '%c' in \\"%s\\": %d\\n", char1, text, countChar(text, char1)); // Expected: 2
+    printf("Occurrences of '%c' in \\"%s\\": %d\\n", char2, text, countChar(text, char2)); // Expected: 0
+    printf("Occurrences of '%c' in \\"%s\\": %d\\n", char3, text, countChar(text, char3)); // Expected: 1
+    printf("Occurrences of ' ' in \\"%s\\": %d\\n", text, countChar(text, ' ')); // Expected: 2
+
+    return 0;
+}`
+            }
+        ];
+
+        // --- Populate the containers ---
+        varOpCodeWritingProblems.forEach((q, index) => createProblemBlock('var-op-code-writing-container', q, index));
+        conditionalCodeWritingProblems.forEach((q, index) => createProblemBlock('conditional-code-writing-container', q, index));
+        loopsCodeWritingProblems.forEach((q, index) => createProblemBlock('loops-code-writing-container', q, index));
+        functionsCodeWritingProblems.forEach((q, index) => createProblemBlock('functions-code-writing-container', q, index));
+        arraysCodeWritingProblems.forEach((q, index) => createProblemBlock('arrays-code-writing-container', q, index));
+        pointersCodeWritingProblems.forEach((q, index) => createProblemBlock('pointers-code-writing-container', q, index));
+
+    </script>
+</body>
+</html>
