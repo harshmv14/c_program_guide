@@ -13,16 +13,23 @@
     <style>
         body {
             font-family: 'Inter', sans-serif;
+            background-color: #f8fafc;
+            color: #1e293b;
         }
         .section-hidden { display: none; }
         .section-visible { display: block; }
         .day-tab.active {
             border-bottom-color: #0ea5e9;
             color: #0ea5e9;
+            font-weight: 600;
         }
         .sidebar-link.active {
             background-color: #0ea5e9;
             color: white;
+            transform: translateX(4px);
+        }
+        .sidebar-link {
+            transition: all 0.2s ease-in-out;
         }
         .solution-code {
             max-height: 0;
@@ -30,20 +37,24 @@
             transition: max-height 0.5s ease-in-out;
         }
         .solution-code.show {
-            max-height: 1000px; /* Adjust as needed */
+            max-height: 2000px;
         }
         html {
             scroll-behavior: smooth;
         }
+        pre {
+            white-space: pre-wrap;
+            word-wrap: break-word;
+        }
         @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
     </style>
 </head>
-<body class="bg-slate-50 text-slate-800">
+<body class="antialiased">
 
-    <div class="container mx-auto p-4 md:p-8">
+    <div class="container mx-auto p-4 md:p-8 max-w-7xl">
         <header class="text-center mb-8">
             <h1 class="text-4xl md:text-5xl font-bold text-slate-900">C Programming in 2 Days</h1>
-            <p class="text-slate-600 mt-2">An Interactive Crash Course</p>
+            <p class="text-slate-600 mt-2 text-lg">An Interactive Crash Course</p>
         </header>
 
         <div class="bg-white rounded-xl shadow-lg p-6 mb-8">
@@ -56,8 +67,8 @@
 
         <div class="border-b border-slate-200 mb-6">
             <nav class="-mb-px flex space-x-6" aria-label="Tabs">
-                <button id="tab-day1" class="day-tab active whitespace-nowrap py-4 px-1 border-b-2 font-medium text-lg">Day 1: Fundamentals</button>
-                <button id="tab-day2" class="day-tab whitespace-nowrap py-4 px-1 border-b-2 font-medium text-lg">Day 2: Advanced Topics</button>
+                <button id="tab-day1" class="day-tab active whitespace-nowrap py-4 px-1 border-b-2 font-medium text-lg text-slate-500 hover:text-sky-600 hover:border-sky-300">Day 1: Fundamentals</button>
+                <button id="tab-day2" class="day-tab whitespace-nowrap py-4 px-1 border-b-2 font-medium text-lg text-slate-500 hover:text-sky-600 hover:border-sky-300">Day 2: Advanced Topics</button>
             </nav>
         </div>
 
@@ -66,7 +77,7 @@
             <aside id="sidebar-day1" class="md:w-1/4">
                 <div class="sticky top-8">
                     <h3 class="text-lg font-semibold mb-3 text-slate-900">Day 1 Topics</h3>
-                    <nav class="flex flex-col space-y-2">
+                    <nav id="nav-day1" class="flex flex-col space-y-2">
                         <a href="#d1-s1" class="sidebar-link px-4 py-2 rounded-md text-slate-700 hover:bg-sky-100">Setup & First Program</a>
                         <a href="#d1-s2" class="sidebar-link px-4 py-2 rounded-md text-slate-700 hover:bg-sky-100">Variables & I/O</a>
                         <a href="#d1-s3" class="sidebar-link px-4 py-2 rounded-md text-slate-700 hover:bg-sky-100">Operators</a>
@@ -80,7 +91,7 @@
              <aside id="sidebar-day2" class="md:w-1/4 section-hidden">
                 <div class="sticky top-8">
                     <h3 class="text-lg font-semibold mb-3 text-slate-900">Day 2 Topics</h3>
-                    <nav class="flex flex-col space-y-2">
+                    <nav id="nav-day2" class="flex flex-col space-y-2">
                         <a href="#d2-s1" class="sidebar-link px-4 py-2 rounded-md text-slate-700 hover:bg-sky-100">Arrays</a>
                         <a href="#d2-s2" class="sidebar-link px-4 py-2 rounded-md text-slate-700 hover:bg-sky-100">Strings</a>
                         <a href="#d2-s3" class="sidebar-link px-4 py-2 rounded-md text-slate-700 hover:bg-sky-100">Pointers</a>
@@ -92,273 +103,277 @@
             </aside>
 
             <!-- Main Content -->
-            <main class="flex-1 min-w-0">
-                <div id="content-day1" class="space-y-12">
-                    <!-- Day 1 Content Sections -->
-                    <section id="d1-s1">
-                        <h2 class="text-3xl font-bold mb-4 text-slate-900 border-b pb-2">Setup & First Program</h2>
-                        <div class="space-y-4 text-slate-700">
-                            <h3 class="text-xl font-semibold mt-4">Theory</h3>
-                            <p>To begin, you need a text editor to write source code and a compiler (like GCC) to translate it into machine-executable code. The basic structure of any C program involves including necessary libraries (like `stdio.h` for input/output), a `main` function which is the program's entry point, and a `return 0;` statement to indicate successful execution. The `printf()` function is your primary tool for displaying output to the console.</p>
-                            <h3 class="text-xl font-semibold mt-6">Practice Problems</h3>
-                            <div class="problem bg-slate-100 p-4 rounded-lg">
-                                <p class="font-semibold">1. Hello World:</p>
-                                <p>Write a program that prints "Hello, World!" to the console.</p>
-                                <button class="solution-toggle mt-2 text-sky-600 font-medium">Show Solution</button>
-                                <div class="solution-code">
-                                    <pre class="bg-slate-800 text-white p-4 rounded-md mt-2 overflow-x-auto"><code class="language-c">#include &lt;stdio.h&gt;
-
-int main(void) {
-    printf("Hello, World!\\n");
-    return 0;
-}</code></pre>
-                                    <p class="mt-2 text-sm text-slate-600"><strong>Explanation:</strong> This program includes the standard input/output library, defines the main function, and uses `printf` to display the text. The `\n` creates a newline.</p>
-                                </div>
-                            </div>
-                        </div>
-                    </section>
-                    <section id="d1-s2">
-                        <h2 class="text-3xl font-bold mb-4 text-slate-900 border-b pb-2">Variables & I/O</h2>
-                        <div class="space-y-4 text-slate-700">
-                           <h3 class="text-xl font-semibold mt-4">Theory</h3>
-                           <p>Variables are named storage locations for data. Key types include `int` (integers), `float`/`double` (decimal numbers), and `char` (single characters). `scanf()` is used to read user input. It is crucial to use the address-of operator `&` with `scanf` to tell it where to store the data in memory.</p>
-                           <h3 class="text-xl font-semibold mt-6">Practice Problems</h3>
-                           <div class="problem bg-slate-100 p-4 rounded-lg">
-                                <p class="font-semibold">1. Swap Values:</p>
-                                <p>Declare two integer variables, swap their values using a third temporary variable, and print their values before and after.</p>
-                                <button class="solution-toggle mt-2 text-sky-600 font-medium">Show Solution</button>
-                                <div class="solution-code">
-                                    <pre class="bg-slate-800 text-white p-4 rounded-md mt-2 overflow-x-auto"><code class="language-c">#include &lt;stdio.h&gt;
-
-int main(void) {
-    int a = 10, b = 20, temp;
-    printf("Before: a=%d, b=%d\n", a, b);
-    temp = a;
-    a = b;
-    b = temp;
-    printf("After: a=%d, b=%d\n", a, b);
-    return 0;
-}</code></pre>
-                                    <p class="mt-2 text-sm text-slate-600"><strong>Explanation:</strong> A `temp` variable is required to hold the value of `a` before it's overwritten, allowing the swap to complete without losing data.</p>
-                                </div>
-                            </div>
-                        </div>
-                    </section>
-                     <section id="d1-s3">
-                        <h2 class="text-3xl font-bold mb-4 text-slate-900 border-b pb-2">Operators</h2>
-                        <p>This section covers arithmetic, relational, and logical operators.</p>
-                    </section>
-                    <section id="d1-s4">
-                        <h2 class="text-3xl font-bold mb-4 text-slate-900 border-b pb-2">Conditionals</h2>
-                         <p>Learn to control program flow with `if`, `else`, and `switch` statements.</p>
-                    </section>
-                    <section id="d1-s5">
-                        <h2 class="text-3xl font-bold mb-4 text-slate-900 border-b pb-2">Loops</h2>
-                        <p>Repeat actions with `for`, `while`, and `do-while` loops.</p>
-                    </section>
-                    <section id="d1-s6">
-                        <h2 class="text-3xl font-bold mb-4 text-slate-900 border-b pb-2">Functions</h2>
-                        <p>Organize code into reusable blocks called functions.</p>
-                    </section>
-                    <section id="d1-s7">
-                        <h2 class="text-3xl font-bold mb-4 text-slate-900 border-b pb-2">Review</h2>
-                        <p>A comprehensive problem to review all Day 1 concepts.</p>
-                    </section>
-                </div>
-
-                <div id="content-day2" class="space-y-12 section-hidden">
-                    <!-- Day 2 Content Sections -->
-                     <section id="d2-s1">
-                        <h2 class="text-3xl font-bold mb-4 text-slate-900 border-b pb-2">Arrays</h2>
-                         <div class="space-y-4 text-slate-700">
-                            <h3 class="text-xl font-semibold mt-4">Theory</h3>
-                            <p>Arrays are fixed-size collections of elements of the same data type, stored in contiguous memory. They are accessed using a 0-based index. Careful index management is essential to avoid "out-of-bounds" errors, a common pitfall in C.</p>
-                            <h3 class="text-xl font-semibold mt-6">Practice Problems</h3>
-                            <div class="problem bg-slate-100 p-4 rounded-lg">
-                                <p class="font-semibold">1. Find Min/Max:</p>
-                                <p>In an integer array, find and print the smallest and largest elements.</p>
-                                <button class="solution-toggle mt-2 text-sky-600 font-medium">Show Solution</button>
-                                <div class="solution-code">
-                                    <pre class="bg-slate-800 text-white p-4 rounded-md mt-2 overflow-x-auto"><code class="language-c">#include &lt;stdio.h&gt;
-
-int main(void) {
-    int data[] = {45, 12, 89, 5, 67, 23};
-    int size = sizeof(data) / sizeof(data[0]);
-    int min = data[0];
-    int max = data[0];
-
-    for (int i = 1; i < size; i++) {
-        if (data[i] < min) min = data[i];
-        if (data[i] > max) max = data[i];
-    }
-    printf("Min: %d, Max: %d\\n", min, max);
-    return 0;
-}</code></pre>
-                                    <p class="mt-2 text-sm text-slate-600"><strong>Explanation:</strong> Initialize `min` and `max` to the first element. Then, loop from the second element, comparing and updating `min` and `max` as needed.</p>
-                                </div>
-                            </div>
-                        </div>
-                    </section>
-                    <section id="d2-s2">
-                        <h2 class="text-3xl font-bold mb-4 text-slate-900 border-b pb-2">Strings</h2>
-                         <p>Understand how C handles strings as null-terminated character arrays and use the `<string.h>` library.</p>
-                    </section>
-                    <section id="d2-s3">
-                        <h2 class="text-3xl font-bold mb-4 text-slate-900 border-b pb-2">Pointers</h2>
-                        <p>This is a core C concept. Pointers are variables that store memory addresses. They are essential for dynamic memory and efficient data manipulation.</p>
-                         <div class="space-y-4 text-slate-700">
-                           <h3 class="text-xl font-semibold mt-6">Practice Problems</h3>
-                           <div class="problem bg-slate-100 p-4 rounded-lg">
-                                <p class="font-semibold">1. Swap with Pointers:</p>
-                                <p>Write a function that takes pointers to two integers and swaps the values they point to. This demonstrates modifying caller data.</p>
-                                <button class="solution-toggle mt-2 text-sky-600 font-medium">Show Solution</button>
-                                <div class="solution-code">
-                                    <pre class="bg-slate-800 text-white p-4 rounded-md mt-2 overflow-x-auto"><code class="language-c">#include &lt;stdio.h&gt;
-
-void swap(int *ptrA, int *ptrB) {
-    int temp = *ptrA;
-    *ptrA = *ptrB;
-    *ptrB = temp;
-}
-
-int main(void) {
-    int var1 = 5, var2 = 10;
-    printf("Before: var1=%d, var2=%d\n", var1, var2);
-    swap(&var1, &var2);
-    printf("After: var1=%d, var2=%d\n", var1, var2);
-    return 0;
-}</code></pre>
-                                    <p class="mt-2 text-sm text-slate-600"><strong>Explanation:</strong> The `swap` function receives memory addresses. By dereferencing the pointers (`*ptrA`), it can modify the original variables in `main`, enabling a true swap.</p>
-                                </div>
-                            </div>
-                        </div>
-                    </section>
-                    <section id="d2-s4">
-                        <h2 class="text-3xl font-bold mb-4 text-slate-900 border-b pb-2">Dynamic Memory</h2>
-                         <p>Learn to allocate memory at runtime using `malloc`, `calloc`, `realloc`, and crucially, release it with `free` to prevent memory leaks.</p>
-                    </section>
-                     <section id="d2-s5">
-                        <h2 class="text-3xl font-bold mb-4 text-slate-900 border-b pb-2">Consolidation</h2>
-                        <p>Advanced practice problems combining arrays, strings, pointers, and dynamic memory.</p>
-                    </section>
-                     <section id="d2-s6">
-                        <h2 class="text-3xl font-bold mb-4 text-slate-900 border-b pb-2">Next Steps</h2>
-                        <p>Guidance on how to continue your C programming journey beyond this crash course.</p>
-                    </section>
-                </div>
+            <main id="main-content" class="flex-1 min-w-0">
+                <!-- Content will be injected here by JS -->
             </main>
         </div>
     </div>
 
     <script>
+        const contentData = {
+            day1: {
+                "d1-s1": {
+                    title: "Setup & First Program",
+                    theory: "To begin, you need a text editor to write source code and a compiler (like GCC) to translate it into machine-executable code. The basic structure of any C program involves including necessary libraries (like `stdio.h` for input/output), a `main` function which is the program's entry point, and a `return 0;` statement to indicate successful execution. The `printf()` function is your primary tool for displaying output to the console.",
+                    problems: [
+                        { q: "Hello World: Write a program that prints 'Hello, World!' to the console.", sol: `#include <stdio.h>\n\nint main(void) {\n    printf("Hello, World!\\n");\n    return 0;\n}`, exp: "This program includes the standard input/output library, defines the main function, and uses `printf` to display the text. The `\\n` creates a newline." },
+                        { q: "Personal Info: Modify the program to print your name on one line and your age on the next line.", sol: `#include <stdio.h>\n\nint main(void) {\n    printf("Your Name\\n");\n    printf("99\\n");\n    return 0;\n}`, exp: "Two `printf` calls are used. Each `\\n` ensures the next output starts on a new line." },
+                        { q: "Simple Pattern: Write a program that uses multiple `printf` statements to print a simple ASCII art triangle.", sol: `#include <stdio.h>\n\nint main(void) {\n    printf("   *\\n");\n    printf("  ***\\n");\n    printf(" *****\\n");\n    return 0;\n}`, exp: "Uses `printf` for each line of the pattern. Leading spaces are included in the strings to create the centered triangle shape." },
+                        { q: "Multiple Lines: Write a program that prints three different sentences, each on its own line, using a single `printf` statement.", sol: `#include <stdio.h>\n\nint main(void) {\n    printf("This is the first sentence.\\nThis is the second.\\nAnd this is the third.\\n");\n    return 0;\n}`, exp: "A single `printf` statement can print multiple lines by embedding newline characters (`\\n`) directly within the string." },
+                        { q: "Tabbed Text: Print two words, 'FirstName' and 'LastName', separated by a single tab character.", sol: `#include <stdio.h>\n\nint main(void) {\n    printf("FirstName\\tLastName\\n");\n    return 0;\n}`, exp: "The escape sequence `\\t` is used to insert a horizontal tab between the words." },
+                        { q: "Quote Printing: Print the following text, including the double quotes: He said, \"C is fun!\"", sol: `#include <stdio.h>\n\nint main(void) {\n    printf("He said, \\\"C is fun!\\\"\\n");\n    return 0;\n}`, exp: "To print a double quote character, you must escape it with a backslash `\\\"`." }
+                    ]
+                },
+                "d1-s2": {
+                    title: "Variables & I/O",
+                    theory: "Variables are named storage locations for data. Key types include `int` (integers), `float`/`double` (decimal numbers), and `char` (single characters). `scanf()` is used to read user input. It is crucial to use the address-of operator `&` with `scanf` to tell it where to store the data in memory.",
+                    problems: [
+                        { q: "Declare & Print: Declare variables of type `int`, `float`, and `char`, initialize them, and print their values and sizes.", sol: `#include <stdio.h>\n\nint main(void) {\n    int age = 30;\n    float weight = 65.5f;\n    char initial = 'J';\n    printf("Age: %d, Size: %zu bytes\\n", age, sizeof(age));\n    printf("Weight: %.1f, Size: %zu bytes\\n", weight, sizeof(weight));\n    printf("Initial: %c, Size: %zu bytes\\n", initial, sizeof(initial));\n    return 0;\n}`, exp: "Declares and initializes variables. `sizeof()` operator gets the byte size, printed using `%zu`. `%.1f` formats the float to one decimal place." },
+                        { q: "User Input: Ask for age (integer) and height in meters (float). Read these values using `scanf` and print them back.", sol: `#include <stdio.h>\n\nint main(void) {\n    int userAge;\n    float userHeight;\n    printf("Enter your age: ");\n    scanf("%d", &userAge);\n    printf("Enter height in meters: ");\n    scanf("%f", &userHeight);\n    printf("You are %d years old and %.2f meters tall.\\n", userAge, userHeight);\n    return 0;\n}`, exp: "Uses `scanf` with `%d` for an integer and `%f` for a float. The `&` operator is essential for providing the memory address to `scanf`." },
+                        { q: "Swap Values: Declare two integer variables, swap their values using a third temporary variable, and print their values before and after.", sol: `#include <stdio.h>\n\nint main(void) {\n    int a = 10, b = 20, temp;\n    printf("Before: a=%d, b=%d\\n", a, b);\n    temp = a;\n    a = b;\n    b = temp;\n    printf("After: a=%d, b=%d\\n", a, b);\n    return 0;\n}`, exp: "A `temp` variable is required to hold the value of `a` before it's overwritten, allowing the swap to complete without losing data." },
+                        { q: "Character Input: Ask the user to enter a single character, read it, and print the character and its ASCII value.", sol: `#include <stdio.h>\n\nint main(void) {\n    char userInput;\n    printf("Enter a character: ");\n    scanf(" %c", &userInput);\n    printf("You entered: %c\\n", userInput);\n    printf("ASCII value: %d\\n", userInput);\n    return 0;\n}`, exp: "The space before `%c` in `scanf` is important to consume any leftover whitespace. Printing a `char` with `%d` shows its integer ASCII value." },
+                        { q: "Area of a Circle: Ask the user for the radius of a circle (can be a decimal). Calculate and print the area. Use a `const` for PI.", sol: `#include <stdio.h>\n\nint main(void) {\n    const float PI = 3.14159f;\n    float radius, area;\n    printf("Enter the radius: ");\n    scanf("%f", &radius);\n    area = PI * radius * radius;\n    printf("The area is: %.2f\\n", area);\n    return 0;\n}`, exp: "Defines PI as a `const float`. Reads the radius using `scanf` with `%f`. Calculates the area and prints it formatted to two decimal places." },
+                        { q: "Rectangle Perimeter: Ask for the length and width (integers) of a rectangle. Calculate and print its perimeter.", sol: `#include <stdio.h>\n\nint main(void) {\n    int length, width, perimeter;\n    printf("Enter length and width: ");\n    scanf("%d %d", &length, &width);\n    perimeter = 2 * (length + width);\n    printf("Perimeter is: %d\\n", perimeter);\n    return 0;\n}`, exp: "`scanf` can read multiple values. The formula for a rectangle's perimeter is 2 * (length + width)." }
+                    ]
+                },
+                "d1-s3": {
+                    title: "Operators",
+                    theory: "Operators are symbols that perform operations on variables and values. C includes arithmetic (`+`, `-`, `*`, `/`, `%`), relational (`==`, `!=`, `>`), logical (`&&`, `||`, `!`), assignment (`=`, `+=`), and increment/decrement (`++`, `--`) operators.",
+                    problems: [
+                        { q: "Basic Calculator Ops: Take two integers as input. Print their sum, difference, product, integer quotient, remainder, and floating-point quotient.", sol: `#include <stdio.h>\n\nint main(void) {\n    int n1, n2;\n    printf("Enter two integers: ");\n    scanf("%d %d", &n1, &n2);\n    printf("Sum: %d\\n", n1 + n2);\n    printf("Difference: %d\\n", n1 - n2);\n    printf("Product: %d\\n", n1 * n2);\n    if (n2 != 0) {\n        printf("Quotient: %d\\n", n1 / n2);\n        printf("Remainder: %d\\n", n1 % n2);\n        printf("Float Quotient: %f\\n", (double)n1 / n2);\n    } else {\n        printf("Cannot divide by zero.\\n");\n    }\n    return 0;\n}`, exp: "Shows standard arithmetic operations. A check for `n2 != 0` is crucial to prevent division by zero errors. Casting `(double)n1` ensures floating-point division." },
+                        { q: "Temperature Conversion: Ask for temperature in Celsius (float). Convert to Fahrenheit (`F = C * 9.0/5.0 + 32`) and print the result.", sol: `#include <stdio.h>\n\nint main(void) {\n    float celsius, fahrenheit;\n    printf("Enter temp in Celsius: ");\n    scanf("%f", &celsius);\n    fahrenheit = (celsius * 9.0 / 5.0) + 32.0;\n    printf("%.2f C is %.2f F\\n", celsius, fahrenheit);\n    return 0;\n}`, exp: "Using `9.0` and `5.0` ensures floating-point division, preventing integer truncation." },
+                        { q: "Leap Year Check: Take a year as input. Determine if it's a leap year. (A year is a leap year if it is divisible by 4, except for end-of-century years, which must be divisible by 400).", sol: `#include <stdio.h>\n\nint main(void) {\n    int year;\n    printf("Enter a year: ");\n    scanf("%d", &year);\n    if ((year % 4 == 0 && year % 100 != 0) || (year % 400 == 0)) {\n        printf("%d is a Leap Year.\\n", year);\n    } else {\n        printf("%d is Not a Leap Year.\\n", year);\n    }\n    return 0;\n}`, exp: "This logic combines modulo (`%`), AND (`&&`), and OR (`||`) operators to perfectly implement the leap year rule." },
+                        { q: "Even/Odd Check: Take an integer as input and print whether it's 'Even' or 'Odd' using the modulo operator.", sol: `#include <stdio.h>\n\nint main(void) {\n    int num;\n    printf("Enter an integer: ");\n    scanf("%d", &num);\n    if (num % 2 == 0) {\n        printf("Even\\n");\n    } else {\n        printf("Odd\\n");\n    }\n    return 0;\n}`, exp: "The modulo operator (`%`) gives the remainder of a division. If `num % 2` is 0, the number is even." },
+                        { q: "Check Divisibility: Ask the user for two integers. Determine if the first number is divisible by the second.", sol: `#include <stdio.h>\n\nint main(void) {\n    int n1, n2;\n    printf("Enter two integers: ");\n    scanf("%d %d", &n1, &n2);\n    if (n2 != 0 && n1 % n2 == 0) {\n        printf("%d is divisible by %d.\\n", n1, n2);\n    } else {\n        printf("%d is not divisible by %d.\\n", n1, n2);\n    }\n    return 0;\n}`, exp: "After checking for a non-zero divisor, the modulo operator is used. A remainder of 0 means the number is perfectly divisible." }
+                    ]
+                },
+                "d1-s4": {
+                    title: "Conditionals",
+                    theory: "Control the flow of your program based on conditions using `if`, `else if`, `else`, and `switch` statements. This allows your program to make decisions and execute different blocks of code.",
+                    problems: [
+                        { q: "Grading: Take an integer score (0-100) and print the grade (A: 90+, B: 80-89, etc.).", sol: `#include <stdio.h>\n\nint main(void) {\n    int score;\n    printf("Enter score (0-100): ");\n    scanf("%d", &score);\n    if (score >= 90) printf("Grade: A\\n");\n    else if (score >= 80) printf("Grade: B\\n");\n    else if (score >= 70) printf("Grade: C\\n");\n    else if (score >= 60) printf("Grade: D\\n");\n    else if (score >= 0) printf("Grade: F\\n");\n    else printf("Invalid score.\\n");\n    return 0;\n}`, exp: "An `if-else if-else` ladder is perfect for checking a series of mutually exclusive conditions." },
+                        { q: "Largest of Three: Take three integers as input and print the largest among them.", sol: `#include <stdio.h>\n\nint main(void) {\n    int a, b, c;\n    printf("Enter three integers: ");\n    scanf("%d %d %d", &a, &b, &c);\n    if (a >= b && a >= c) {\n        printf("Largest is %d\\n", a);\n    } else if (b >= a && b >= c) {\n        printf("Largest is %d\\n", b);\n    } else {\n        printf("Largest is %d\\n", c);\n    }\n    return 0;\n}`, exp: "This uses an `if-else if-else` structure to find the largest number by comparing each number against the others." },
+                        { q: "Day of Week: Ask for a number (1-7) and print the corresponding day using a `switch` statement.", sol: `#include <stdio.h>\n\nint main(void) {\n    int day;\n    printf("Enter day number (1-7): ");\n    scanf("%d", &day);\n    switch(day) {\n        case 1: printf("Monday\\n"); break;\n        case 2: printf("Tuesday\\n"); break;\n        case 3: printf("Wednesday\\n"); break;\n        case 4: printf("Thursday\\n"); break;\n        case 5: printf("Friday\\n"); break;\n        case 6: printf("Saturday\\n"); break;\n        case 7: printf("Sunday\\n"); break;\n        default: printf("Invalid day.\\n");\n    }\n    return 0;\n}`, exp: "`switch` is efficient for comparing a variable against multiple constant values. `break` is crucial to prevent 'fall-through' to the next case." },
+                        { q: "Vowel or Consonant: Read a character and determine if it is a vowel or a consonant.", sol: `#include <stdio.h>\n#include <ctype.h>\n\nint main(void) {\n    char c;\n    printf("Enter a character: ");\n    scanf(" %c", &c);\n    c = tolower(c);\n    if (c == 'a' || c == 'e' || c == 'i' || c == 'o' || c == 'u') {\n        printf("Vowel\\n");\n    } else if (c >= 'a' && c <= 'z') {\n        printf("Consonant\\n");\n    } else {\n        printf("Not a letter.\\n");\n    }\n    return 0;\n}`, exp: "Uses `tolower()` from `<ctype.h>` to simplify the check. An `if` statement checks for vowels, an `else if` checks if it's a letter, and `else` handles non-alphabetic characters." },
+                        { q: "Ternary Max: Take two integers. Find and print the maximum of the two using the ternary operator.", sol: `#include <stdio.h>\n\nint main(void) {\n    int n1, n2, max;\n    printf("Enter two integers: ");\n    scanf("%d %d", &n1, &n2);\n    max = (n1 > n2) ? n1 : n2;\n    printf("The maximum is: %d\\n", max);\n    return 0;\n}`, exp: "The ternary operator `(condition) ? value_if_true : value_if_false` provides a compact way to write simple if-else logic for assignments." }
+                    ]
+                },
+                "d1-s5": {
+                    title: "Loops",
+                    theory: "Execute blocks of code repeatedly using `for`, `while`, and `do-while` loops. This is fundamental for tasks like processing collections of data, user input validation, or running simulations. Learn to control loop execution with `break` and `continue`.",
+                    problems: [
+                        { q: "Number Series: Print numbers from 1 to 10 using a `for` loop.", sol: `#include <stdio.h>\n\nint main(void) {\n    for (int i = 1; i <= 10; i++) {\n        printf("%d ", i);\n    }\n    printf("\\n");\n    return 0;\n}`, exp: "A `for` loop is ideal here as it combines initialization, condition, and update in one line for a clear, counter-controlled loop." },
+                        { q: "Factorial: Calculate the factorial of a non-negative integer entered by the user.", sol: `#include <stdio.h>\n\nint main(void) {\n    int n;\n    long long factorial = 1;\n    printf("Enter an integer: ");\n    scanf("%d", &n);\n    for (int i = 1; i <= n; ++i) {\n        factorial *= i;\n    }\n    printf("Factorial of %d = %lld\\n", n, factorial);\n    return 0;\n}`, exp: "A `for` loop iterates from 1 to n, multiplying the `factorial` variable by the counter `i` in each step. `long long` is used to hold potentially large results." },
+                        { q: "Multiplication Table: Print the multiplication table (1 to 10) for a number entered by the user.", sol: `#include <stdio.h>\n\nint main(void) {\n    int num;\n    printf("Enter a number: ");\n    scanf("%d", &num);\n    for (int i = 1; i <= 10; i++) {\n        printf("%d x %d = %d\\n", num, i, num * i);\n    }\n    return 0;\n}`, exp: "The `for` loop iterates 10 times, printing the product of the user's number and the current loop counter `i`." },
+                        { q: "Sum of N Numbers: Ask the user for a positive integer N, then find the sum of all numbers from 1 to N.", sol: `#include <stdio.h>\n\nint main(void) {\n    int n, sum = 0;\n    printf("Enter a positive integer: ");\n    scanf("%d", &n);\n    for (int i = 1; i <= n; i++) {\n        sum += i;\n    }\n    printf("Sum = %d\\n", sum);\n    return 0;\n}`, exp: "A `for` loop iterates from 1 to N, adding the value of the loop counter `i` to `sum` in each pass." },
+                        { q: "Reverse a Number: Ask for an integer and print its reverse.", sol: `#include <stdio.h>\n\nint main(void) {\n    int n, reversed = 0, remainder;\n    printf("Enter an integer: ");\n    scanf("%d", &n);\n    while (n != 0) {\n        remainder = n % 10;\n        reversed = reversed * 10 + remainder;\n        n /= 10;\n    }\n    printf("Reversed number = %d\\n", reversed);\n    return 0;\n}`, exp: "This `while` loop repeatedly extracts the last digit using modulo 10, adds it to the `reversed` number, and removes the last digit from the original number by dividing by 10." },
+                        { q: "Pyramid Pattern: Print a pyramid of asterisks with a user-defined height.", sol: `#include <stdio.h>\n\nint main(void) {\n    int i, j, rows;\n    printf("Enter number of rows: ");\n    scanf("%d", &rows);\n    for (i = 1; i <= rows; ++i) {\n        for (j = 1; j <= i; ++j) {\n            printf("* ");\n        }\n        printf("\\n");\n    }\n    return 0;\n}`, exp: "Nested loops are used. The outer loop controls the rows, and the inner loop controls the number of asterisks printed in each row, which is equal to the current row number." }
+                    ]
+                },
+                "d1-s6": {
+                    title: "Functions",
+                    theory: "Break your code into reusable, modular pieces called functions. This improves readability, makes code easier to debug, and avoids repetition. Understand how to pass data to functions (parameters) and how to get data back (return values).",
+                    problems: [
+                        { q: "Adder Function: Write a function `int add(int a, int b)` that takes two integers and returns their sum.", sol: `#include <stdio.h>\n\nint add(int a, int b) {\n    return a + b;\n}\n\nint main(void) {\n    int sum = add(15, 27);\n    printf("Sum is %d\\n", sum);\n    return 0;\n}`, exp: "The `add` function encapsulates the addition logic. `main` calls this function and stores the returned result in the `sum` variable." },
+                        { q: "Find Max Function: Write a function `int findMax(int x, int y)` that returns the larger of two integers.", sol: `#include <stdio.h>\n\nint findMax(int x, int y) {\n    return (x > y) ? x : y;\n}\n\nint main(void) {\n    int maxVal = findMax(-5, 10);\n    printf("Max is %d\\n", maxVal);\n    return 0;\n}`, exp: "Using a ternary operator within the function provides a concise way to find and return the maximum value." },
+                        { q: "isEven Function: Write a function `int isEven(int num)` that returns 1 if `num` is even and 0 otherwise.", sol: `#include <stdio.h>\n\nint isEven(int num) {\n    return (num % 2 == 0);\n}\n\nint main(void) {\n    int num = 10;\n    if (isEven(num)) {\n        printf("%d is Even.\\n", num);\n    } else {\n        printf("%d is Odd.\\n", num);\n    }\n    return 0;\n}`, exp: "The function returns the result of the boolean expression `num % 2 == 0`. In C, this result is 1 (true) or 0 (false), which can be used directly in an `if` statement." },
+                        { q: "Factorial Function: Write a function `long long factorial(int n)` to calculate the factorial of a number.", sol: `#include <stdio.h>\n\nlong long factorial(int n) {\n    if (n < 0) return -1; // Error case\n    long long fact = 1;\n    for (int i = 1; i <= n; i++) {\n        fact *= i;\n    }\n    return fact;\n}\n\nint main(void) {\n    printf("Factorial of 5 is %lld\\n", factorial(5));\n    return 0;\n}`, exp: "The factorial logic is encapsulated in a function. This makes it easy to calculate factorials for different numbers without rewriting the loop." },
+                        { q: "Power Function: Write a function `double power(double base, int exp)` that calculates `base` raised to the power of `exp`.", sol: `#include <stdio.h>\n\ndouble power(double base, int exp) {\n    double result = 1.0;\n    for (int i = 0; i < exp; i++) {\n        result *= base;\n    }\n    return result;\n}\n\nint main(void) {\n    printf("2.5^3 = %f\\n", power(2.5, 3));\n    return 0;\n}`, exp: "The function uses a loop to multiply the `base` by itself `exp` times. It initializes `result` to 1, the multiplicative identity." }
+                    ]
+                },
+                "d1-s7": {
+                    title: "Review",
+                    theory: "This comprehensive problem combines many Day 1 concepts: loops, conditionals, and functions to create a functional application.",
+                    problems: [
+                        { q: "Enhanced Calculator: Create a simple calculator with a menu for Add, Subtract, Multiply, Divide, and Exit. Use a `do-while` loop for the menu, a `switch` statement for choices, and separate functions for each operation.", sol: `#include <stdio.h>\n\ndouble add(double a, double b) { return a + b; }\ndouble subtract(double a, double b) { return a - b; }\ndouble multiply(double a, double b) { return a * b; }\ndouble divide(double a, double b) {\n    if (b == 0) return 0.0;\n    return a / b;\n}\n\nvoid printMenu(void) {\n    printf("--- Calculator Menu ---\\n");\n    printf("1. Add\\n2. Subtract\\n3. Multiply\\n4. Divide\\n0. Exit\\n");\n    printf("-----------------------\\n");\n}\n\nint main(void) {\n    int choice;\n    double num1, num2;\n    do {\n        printMenu();\n        scanf("%d", &choice);\n        if (choice >= 1 && choice <= 4) {\n            printf("Enter two numbers: ");\n            scanf("%lf %lf", &num1, &num2);\n        }\n        switch (choice) {\n            case 1: printf("Result: %.2lf\\n", add(num1, num2)); break;\n            case 2: printf("Result: %.2lf\\n", subtract(num1, num2)); break;\n            case 3: printf("Result: %.2lf\\n", multiply(num1, num2)); break;\n            case 4: if(num2 != 0) printf("Result: %.2lf\\n", divide(num1, num2)); else printf("Error: Division by zero.\\n"); break;\n            case 0: printf("Exiting.\\n"); break;\n            default: printf("Invalid choice.\\n");\n        }\n    } while (choice != 0);\n    return 0;\n}`, exp: "This solution modularizes the calculator. A `do-while` loop presents the menu until the user exits. A `switch` statement calls the appropriate function based on user input. Functions for each operation make the code clean and reusable." }
+                    ]
+                }
+            },
+            day2: {
+                 "d2-s1": {
+                   title: "Arrays",
+                   theory: "Arrays are fixed-size collections of elements of the same data type, stored in contiguous memory. They are accessed using a 0-based index (the first element is at index 0). Careful index management is essential to avoid 'out-of-bounds' errors, a common pitfall in C.",
+                   problems: [
+                        { q: "Input & Print Array: Declare an integer array of size 5, ask the user to fill it, then print all elements.", sol: `#include <stdio.h>\n#define SIZE 5\n\nint main(void) {\n    int nums[SIZE];\n    printf("Enter %d integers:\\n", SIZE);\n    for(int i = 0; i < SIZE; i++) {\n        scanf("%d", &nums[i]);\n    }\n    printf("You entered: ");\n    for(int i = 0; i < SIZE; i++) {\n        printf("%d ", nums[i]);\n    }\n    printf("\\n");\n    return 0;\n}`, exp: "Two `for` loops are used. The first loop populates the array by reading input into each index `nums[i]`. The second loop iterates through the array to print each element." },
+                        { q: "Sum & Average: In a float array, calculate and print the sum and average of its elements.", sol: `#include <stdio.h>\n#define SIZE 5\n\nint main(void) {\n    float values[SIZE] = {1.5f, 2.0f, 3.5f, 4.0f, 5.5f};\n    float sum = 0.0f;\n    for(int i = 0; i < SIZE; i++) {\n        sum += values[i];\n    }\n    printf("Sum = %.2f\\n", sum);\n    printf("Average = %.2f\\n", sum / SIZE);\n    return 0;\n}`, exp: "A loop iterates through the array, accumulating the total in the `sum` variable. The average is then calculated by dividing the sum by the total number of elements." },
+                        { q: "Find Min/Max: In an integer array, find and print the smallest and largest elements.", sol: `#include <stdio.h>\n\nint main(void) {\n    int data[] = {45, 12, 89, 5, 67, 23};\n    int size = sizeof(data) / sizeof(data[0]);\n    int min = data[0];\n    int max = data[0];\n\n    for (int i = 1; i < size; i++) {\n        if (data[i] < min) min = data[i];\n        if (data[i] > max) max = data[i];\n    }\n    printf("Min: %d, Max: %d\\n", min, max);\n    return 0;\n}`, exp: "Initialize `min` and `max` to the first element. Then, loop from the second element, comparing and updating `min` and `max` as needed." },
+                        { q: "Reverse Array: Read 5 integers into an array and then print them out in reverse order.", sol: `#include <stdio.h>\n#define SIZE 5\n\nint main(void) {\n    int nums[SIZE];\n    printf("Enter %d integers: ", SIZE);\n    for(int i=0; i < SIZE; i++) scanf("%d", &nums[i]);\n    printf("Reversed: ");\n    for(int i = SIZE - 1; i >= 0; i--) {\n        printf("%d ", nums[i]);\n    }\n    printf("\\n");\n    return 0;\n}`, exp: "To print in reverse, the `for` loop is initialized with the last index (`SIZE - 1`), the condition checks if the index is greater than or equal to 0, and the update decrements the index (`i--`)." },
+                        { q: "Count Even Numbers: Given an integer array, count how many numbers are even and print the count.", sol: `#include <stdio.h>\n\nint main(void) {\n    int data[] = {1, 2, 3, 4, 5, 6, 7, 8};\n    int size = sizeof(data) / sizeof(data[0]);\n    int evenCount = 0;\n\n    for (int i = 0; i < size; i++) {\n        if (data[i] % 2 == 0) {\n            evenCount++;\n        }\n    }\n    printf("Number of even elements: %d\\n", evenCount);\n    return 0;\n}`, exp: "Iterate through the array. Use the modulo operator (`%`) to check if a number is even. If `data[i] % 2` is 0, increment the counter." }
+                   ]
+                },
+                 "d2-s2": {
+                    title: "Strings",
+                    theory: "Understand how C handles strings as null-terminated character arrays (`char` arrays ending in `\\0`). Learn to use the powerful functions in the `<string.h>` library for manipulation, comparison, and length calculation. Always be mindful of buffer sizes to prevent overflows.",
+                    problems: [
+                        { q: "Concatenate Names: Ask for a first and last name and combine them into a single 'fullName' string.", sol: `#include <stdio.h>\n#include <string.h>\n\nint main(void) {\n    char first[50], last[50], fullName[101];\n    printf("Enter first name: ");\n    scanf("%s", first);\n    printf("Enter last name: ");\n    scanf("%s", last);\n    strcpy(fullName, first);\n    strcat(fullName, " ");\n    strcat(fullName, last);\n    printf("Full name: %s\\n", fullName);\n    return 0;\n}`, exp: "`strcpy` copies the first name into `fullName`. `strcat` appends a space, and then appends the last name. The `fullName` buffer must be large enough to hold both plus the space and null terminator." },
+                        { q: "String Compare: Take two strings as input and print whether they are 'Equal' or 'Not Equal'.", sol: `#include <stdio.h>\n#include <string.h>\n\nint main(void) {\n    char str1[100], str2[100];\n    printf("Enter first string: ");\n    scanf("%s", str1);\n    printf("Enter second string: ");\n    scanf("%s", str2);\n    if (strcmp(str1, str2) == 0) {\n        printf("Equal\\n");\n    } else {\n        printf("Not Equal\\n");\n    }\n    return 0;\n}`, exp: "The `strcmp()` function compares two strings lexicographically. It returns 0 if they are identical." },
+                        { q: "Count Vowels: Read a string and count the number of vowels (a, e, i, o, u, case-insensitive).", sol: `#include <stdio.h>\n#include <string.h>\n#include <ctype.h>\n\nint main(void) {\n    char str[100];\n    int vowels = 0;\n    printf("Enter a string: ");\n    fgets(str, 100, stdin);\n    for(int i=0; str[i] != '\\0'; i++) {\n        char c = tolower(str[i]);\n        if (c=='a' || c=='e' || c=='i' || c=='o' || c=='u') {\n            vowels++;\n        }\n    }\n    printf("Vowel count: %d\\n", vowels);\n    return 0;\n}`, exp: "The code iterates through the string. `tolower()` from `<ctype.h>` simplifies the check by converting each character to lowercase before comparing it to the vowels." },
+                        { q: "String to Uppercase: Read a string and convert all its lowercase letters to uppercase.", sol: `#include <stdio.h>\n#include <string.h>\n#include <ctype.h>\n\nint main(void) {\n    char str[100];\n    printf("Enter a string: ");\n    fgets(str, 100, stdin);\n    for(int i=0; str[i] != '\\0'; i++) {\n        str[i] = toupper(str[i]);\n    }\n    printf("Uppercase: %s", str);\n    return 0;\n}`, exp: "This loop modifies the string 'in-place'. `toupper()` converts a character to uppercase if it's a lowercase letter; otherwise, it returns the character unchanged." },
+                        { q: "Check for Palindrome: Read a string and check if it is a palindrome (reads the same forwards and backwards).", sol: `#include <stdio.h>\n#include <string.h>\n\nint main(void) {\n    char str[100];\n    printf("Enter a string: ");\n    scanf("%s", str);\n    int l = 0;\n    int h = strlen(str) - 1;\n    int isPalindrome = 1;\n    while (h > l) {\n        if (str[l++] != str[h--]) {\n            isPalindrome = 0;\n            break;\n        }\n    }\n    if(isPalindrome) printf("Palindrome\\n");\n    else printf("Not a Palindrome\\n");\n    return 0;\n}`, exp: "This algorithm uses two 'pointers' (indices `l` and `h`) that start at the beginning and end of the string. They move towards the center, comparing characters. If a mismatch is found, a flag is set, and the loop breaks." }
+                    ]
+                },
+                 "d2-s3": {
+                    title: "Pointers",
+                    theory: "A core C concept. Pointers are variables that store memory addresses. They are essential for dynamic memory, efficient data manipulation, and allowing functions to modify data passed to them. Master the address-of (`&`) and dereference (`*`) operators.",
+                    problems: [
+                        { q: "Swap with Pointers: Write a function that takes pointers to two integers and swaps the values they point to.", sol: `#include <stdio.h>\n\nvoid swap(int *ptrA, int *ptrB) {\n    int temp = *ptrA;\n    *ptrA = *ptrB;\n    *ptrB = temp;\n}\n\nint main(void) {\n    int var1 = 5, var2 = 10;\n    printf("Before: var1=%d, var2=%d\\n", var1, var2);\n    swap(&var1, &var2);\n    printf("After: var1=%d, var2=%d\\n", var1, var2);\n    return 0;\n}`, exp: "The `swap` function receives memory addresses. By dereferencing the pointers (`*ptrA`), it can modify the original variables in `main`." },
+                        { q: "String Length with Pointer: Write a function that calculates the length of a string using a pointer, without using `strlen()`.", sol: `#include <stdio.h>\n\nint stringLength(char *s) {\n    int length = 0;\n    while (*s != '\\0') {\n        length++;\n        s++;\n    }\n    return length;\n}\n\nint main(void) {\n    char myString[] = "Hello";\n    printf("Length is %d\\n", stringLength(myString));\n    return 0;\n}`, exp: "The pointer `s` is advanced through the string one character at a time (`s++`) until it points to the null terminator. A counter tracks the number of steps." },
+                        { q: "Sum of Array with Pointer: Write a function that takes an integer array and its size, and returns the sum of its elements using pointer arithmetic.", sol: `#include <stdio.h>\n\nint sumArray(int *arr, int size) {\n    int sum = 0;\n    for (int i = 0; i < size; i++) {\n        sum += *(arr + i);\n    }\n    return sum;\n}\n\nint main(void) {\n    int nums[] = {1, 2, 3, 4, 5};\n    printf("Sum is %d\\n", sumArray(nums, 5));\n    return 0;\n}`, exp: "The array name `nums` decays to a pointer to its first element. The function receives this pointer. `*(arr + i)` accesses the element at index `i` using pointer arithmetic instead of `arr[i]`." },
+                        { q: "Find Character in String: Write a function `char* findChar(char *str, char c)` that returns a pointer to the first occurrence of character `c` in `str`, or `NULL` if not found.", sol: `#include <stdio.h>\n\nchar* findChar(char *str, char c) {\n    while (*str != '\\0') {\n        if (*str == c) {\n            return str;\n        }\n        str++;\n    }\n    return NULL;\n}\n\nint main(void) {\n    char text[] = "hello world";\n    char *found = findChar(text, 'w');\n    if (found != NULL) {\n        printf("Character found at position: %ld\\n", found - text);\n    } else {\n        printf("Character not found.\\n");\n    }\n    return 0;\n}`, exp: "The function iterates through the string with a pointer. If the character is found, it returns the current pointer. If the loop finishes, it means the character wasn't there, so it returns `NULL`." },
+                        { q: "Copy String with Pointers: Write a function that copies one string to another using pointers.", sol: `#include <stdio.h>\n\nvoid stringCopy(char *dest, char *src) {\n    while (*src != '\\0') {\n        *dest = *src;\n        src++;\n        dest++;\n    }\n    *dest = '\\0'; // Don't forget the null terminator!\n}\n\nint main(void) {\n    char source[] = "Copy this!";\n    char destination[20];\n    stringCopy(destination, source);\n    printf("Copied string: %s\\n", destination);\n    return 0;\n}`, exp: "This function iterates through the source string, copying each character to the destination. Both pointers are incremented in each step. Finally, the null terminator is manually added to the end of the destination string." }
+                    ]
+                },
+                "d2-s4": {
+                    title: "Dynamic Memory",
+                    theory: "Go beyond fixed-size arrays. Learn to allocate memory at runtime from the heap using `malloc`, `calloc`, `realloc`, and crucially, release it with `free` to prevent memory leaks. This is essential for handling data of unknown size.",
+                    problems: [
+                        { q: "Dynamic Integer Array (malloc): Ask the user how many integers they want. Dynamically allocate an array, fill it, print it, and free the memory.", sol: `#include <stdio.h>\n#include <stdlib.h>\n\nint main(void) {\n    int n, *arr;\n    printf("How many integers? ");\n    scanf("%d", &n);\n    arr = (int *)malloc(n * sizeof(int));\n    if (arr == NULL) return 1;\n    printf("Enter %d integers:\\n", n);\n    for(int i=0; i<n; i++) scanf("%d", &arr[i]);\n    for(int i=0; i<n; i++) printf("%d ", arr[i]);\n    printf("\\n");\n    free(arr);\n    return 0;\n}`, exp: "`malloc` allocates a block of memory of a specified size in bytes. The returned `void*` pointer must be cast. Always check if the returned pointer is `NULL`, which indicates allocation failure. `free()` must be called to prevent memory leaks." },
+                        { q: "Dynamic Float Array (calloc): Repeat the previous problem, but for floats and use `calloc`.", sol: `#include <stdio.h>\n#include <stdlib.h>\n\nint main(void) {\n    int n;\n    float *arr;\n    printf("How many floats? ");\n    scanf("%d", &n);\n    arr = (float *)calloc(n, sizeof(float));\n    if(arr == NULL) return 1;\n    printf("Enter %d floats:\\n", n);\n    for(int i=0; i<n; i++) scanf("%f", &arr[i]);\n    for(int i=0; i<n; i++) printf("%.2f ", arr[i]);\n    printf("\\n");\n    free(arr);\n    return 0;\n}`, exp: "`calloc` is like `malloc` but has two arguments (number of elements, size of each) and it initializes the allocated memory to zero, which can be useful." },
+                        { q: "Dynamic String Allocation: Ask for a maximum length, dynamically allocate a string, read into it using `fgets`, print it, and free it.", sol: `#include <stdio.h>\n#include <stdlib.h>\n\nint main(void) {\n    int len;\n    char *str;\n    printf("Max length of string: ");\n    scanf("%d", &len);\n    getchar(); // Consume newline\n    str = (char *)malloc((len + 1) * sizeof(char));\n    if(str == NULL) return 1;\n    printf("Enter string: ");\n    fgets(str, len + 1, stdin);\n    printf("You entered: %s", str);\n    free(str);\n    return 0;\n}`, exp: "Memory for a string must include one extra byte for the null terminator (`\\0`), so we allocate `len + 1`. `getchar()` is needed to consume the newline character left by `scanf` before `fgets` is called." },
+                        { q: "Create a copy of an array: Write a function that takes an integer array and its size, creates a new dynamic array of the same size, copies the elements, and returns a pointer to the new array.", sol: `#include <stdio.h>\n#include <stdlib.h>\n\nint* copyArray(int *arr, int size) {\n    if (arr == NULL || size <= 0) return NULL;\n    int *newArr = (int *)malloc(size * sizeof(int));\n    if (newArr == NULL) return NULL;\n    for(int i=0; i<size; i++) {\n        newArr[i] = arr[i];\n    }\n    return newArr;\n}\n\nint main(void) {\n    int original[] = {1, 2, 3};\n    int *copied = copyArray(original, 3);\n    if(copied != NULL) {\n        printf("Copied array: %d %d %d\\n", copied[0], copied[1], copied[2]);\n        free(copied); // Remember to free the returned array!\n    }\n    return 0;\n}`, exp: "The function allocates new memory and returns its address. The calling function (`main`) is responsible for `free`ing this memory when it's no longer needed." }
+                    ]
+                },
+                "d2-s5": {
+                    title: "Consolidation",
+                    theory: "Tackle advanced practice problems that combine arrays, strings, pointers, and dynamic memory to solidify your understanding of how these core concepts work together.",
+                    problems: [
+                        { q: "String Reversal (In-place): Write a function `void reverseString(char *str)` that reverses a string *in-place* using pointers.", sol: `#include <stdio.h>\n#include <string.h>\n\nvoid reverseString(char *str) {\n    char *start = str;\n    char *end = str + strlen(str) - 1;\n    char temp;\n    while (start < end) {\n        temp = *start;\n        *start = *end;\n        *end = temp;\n        start++;\n        end--;\n    }\n}\n\nint main(void) {\n    char text[] = "hello";\n    reverseString(text);\n    printf("Reversed: %s\\n", text);\n    return 0;\n}`, exp: "Uses two pointers, `start` and `end`. They move towards the middle, swapping the characters they point to in each iteration. This modifies the original string directly without needing a second array." },
+                        { q: "Dynamic Array of Strings (Complex): This is the culminating problem. Ask a user how many names they want to enter. Dynamically allocate an array of character pointers. Then for each name, dynamically allocate just enough memory for that specific name, read it, and store its pointer in the main array. Finally, print all names and free all allocated memory.", sol: `#include <stdio.h>\n#include <stdlib.h>\n#include <string.h>\n\nint main(void) {\n    int numNames;\n    char temp[100];\n    printf("How many names? ");\n    scanf("%d", &numNames);\n    getchar(); // consume newline\n\n    // Allocate array of pointers\n    char **names = malloc(numNames * sizeof(char *));\n    if (names == NULL) return 1;\n\n    for (int i = 0; i < numNames; i++) {\n        printf("Enter name %d: ", i + 1);\n        fgets(temp, 100, stdin);\n        temp[strcspn(temp, "\\n")] = 0; // remove newline\n\n        // Allocate space for this specific name\n        names[i] = malloc(strlen(temp) + 1);\n        if (names[i] == NULL) return 1;\n        strcpy(names[i], temp);\n    }\n\n    printf("\\n--- Stored Names ---\\n");\n    for (int i = 0; i < numNames; i++) {\n        printf("%s\\n", names[i]);\n    }\n\n    // Free memory\n    for (int i = 0; i < numNames; i++) {\n        free(names[i]);\n    }\n    free(names);\n\n    return 0;\n}`, exp: "This requires two levels of dynamic allocation. First, `malloc` is used for the array of pointers (`char **`). Then, inside a loop, `malloc` is used again for each individual string. Freeing memory is a two-step process: first free each individual string, then free the array of pointers." }
+                    ]
+                },
+                "d2-s6": {
+                    title: "Next Steps",
+                    theory: "Congratulations on completing this intense crash course! You've covered the fundamentals, but C is vast. To truly master it, you should now explore structs (custom data types), file I/O (reading from and writing to files), build systems (Makefiles), and learn to use a debugger like GDB.",
+                    problems: [
+                        { q: "What is a `struct`?", exp: "A `struct` is a user-defined data type that groups together related variables of different types under a single name. For example, you could create a `struct Student` to hold a student's name (string), ID (integer), and GPA (float)." },
+                        { q: "What is the purpose of File I/O?", exp: "File Input/Output (I/O) allows your program to read data from and write data to files on your computer. This makes data persistent, meaning it isn't lost when the program ends. Key functions include `fopen()`, `fclose()`, `fprintf()`, and `fscanf()`." },
+                        { q: "Why use a debugger?", exp: "A debugger (like GDB) is a powerful tool that allows you to run your program step-by-step, inspect the values of variables at any point, and see exactly where a program crashes. It is far more efficient for finding bugs than filling your code with `printf` statements." }
+                    ]
+                }
+            }
+        };
+
         document.addEventListener('DOMContentLoaded', () => {
+            const mainContent = document.getElementById('main-content');
             const day1Tab = document.getElementById('tab-day1');
             const day2Tab = document.getElementById('tab-day2');
-            const day1Content = document.getElementById('content-day1');
-            const day2Content = document.getElementById('content-day2');
             const day1Sidebar = document.getElementById('sidebar-day1');
             const day2Sidebar = document.getElementById('sidebar-day2');
 
-            const solutionToggles = document.querySelectorAll('.solution-toggle');
+            function createProblemHTML(problem, index) {
+                const safeSol = problem.sol ? problem.sol.replace(/</g, "&lt;").replace(/>/g, "&gt;") : '';
+                const solutionBlock = problem.sol ? `
+                    <pre class="bg-slate-800 text-white p-4 rounded-md mt-2 overflow-x-auto"><code class="language-c">${safeSol}</code></pre>
+                    <p class="mt-2 text-sm text-slate-600"><strong>Explanation:</strong> ${problem.exp}</p>
+                ` : `<p class="mt-2 text-sm text-slate-600">${problem.exp}</p>`;
+                
+                return `
+                    <div class="problem bg-slate-100 p-4 rounded-lg mt-4">
+                        <p class="font-semibold">${index + 1}. ${problem.q}</p>
+                        <button class="solution-toggle mt-2 text-sky-600 font-medium text-sm">Show Solution</button>
+                        <div class="solution-code">
+                            ${solutionBlock}
+                        </div>
+                    </div>
+                `;
+            }
 
+            function generateContent(dayData) {
+                let html = '<div class="space-y-12">';
+                for (const sectionId in dayData) {
+                    const section = dayData[sectionId];
+                    html += `
+                        <section id="${sectionId}">
+                            <h2 class="text-3xl font-bold mb-4 text-slate-900 border-b-2 border-slate-200 pb-2">${section.title}</h2>
+                            <div class="space-y-4 text-slate-700 leading-relaxed">
+                                <h3 class="text-xl font-semibold mt-4">Theory</h3>
+                                <p>${section.theory}</p>
+                                ${section.problems.length > 0 ? '<h3 class="text-xl font-semibold mt-6">Practice Problems</h3>' : ''}
+                                ${section.problems.map(createProblemHTML).join('')}
+                            </div>
+                        </section>
+                    `;
+                }
+                html += '</div>';
+                return html;
+            }
+            
+            function setupSolutionToggles() {
+                document.querySelectorAll('.solution-toggle').forEach(button => {
+                    const existingButton = button;
+                    const newButton = existingButton.cloneNode(true);
+                    existingButton.parentNode.replaceChild(newButton, existingButton);
+                    
+                    newButton.addEventListener('click', () => {
+                        const solutionDiv = newButton.nextElementSibling;
+                        solutionDiv.classList.toggle('show');
+                        newButton.textContent = solutionDiv.classList.contains('show') ? 'Hide Solution' : 'Show Solution';
+                    });
+                });
+            }
+
+            let currentObserver;
+            function setupScrollSpy() {
+                if(currentObserver) currentObserver.disconnect();
+                const currentNav = document.querySelector('aside:not(.section-hidden) nav');
+                if(!currentNav) return;
+
+                const links = currentNav.querySelectorAll('.sidebar-link');
+                const sections = mainContent.querySelectorAll('section');
+
+                currentObserver = new IntersectionObserver((entries) => {
+                    entries.forEach(entry => {
+                        if (entry.isIntersecting) {
+                            const id = entry.target.getAttribute('id');
+                            links.forEach(link => {
+                                link.classList.toggle('active', link.getAttribute('href') === `#${id}`);
+                            });
+                        }
+                    });
+                }, { rootMargin: "0px 0px -75% 0px" });
+
+                sections.forEach(section => {
+                    currentObserver.observe(section);
+                });
+            }
+            
             function switchTab(day) {
                 if (day === 1) {
                     day1Tab.classList.add('active');
                     day2Tab.classList.remove('active');
-                    day1Content.classList.remove('section-hidden');
-                    day2Content.classList.add('section-hidden');
                     day1Sidebar.classList.remove('section-hidden');
                     day2Sidebar.classList.add('section-hidden');
+                    mainContent.innerHTML = generateContent(contentData.day1);
                 } else {
                     day1Tab.classList.remove('active');
                     day2Tab.classList.add('active');
-                    day1Content.classList.add('section-hidden');
-                    day2Content.classList.remove('section-hidden');
                     day1Sidebar.classList.add('section-hidden');
                     day2Sidebar.classList.remove('section-hidden');
+                    mainContent.innerHTML = generateContent(contentData.day2);
                 }
+                setupSolutionToggles();
+                setupScrollSpy();
             }
 
             day1Tab.addEventListener('click', () => switchTab(1));
             day2Tab.addEventListener('click', () => switchTab(2));
 
-            solutionToggles.forEach(button => {
-                button.addEventListener('click', () => {
-                    const solutionDiv = button.nextElementSibling;
-                    solutionDiv.classList.toggle('show');
-                    button.textContent = solutionDiv.classList.contains('show') ? 'Hide Solution' : 'Show Solution';
-                });
-            });
-
-            // Active sidebar link highlighting based on scroll
-            const allLinks = document.querySelectorAll('.sidebar-link');
-            const sections = document.querySelectorAll('section');
-
-            const observer = new IntersectionObserver((entries) => {
-                entries.forEach(entry => {
-                    if (entry.isIntersecting) {
-                        allLinks.forEach(link => {
-                           link.classList.toggle('active', link.getAttribute('href').substring(1) === entry.target.id);
-                        });
-                    }
-                });
-            }, { rootMargin: "-50% 0px -50% 0px" });
-
-            sections.forEach(section => {
-                observer.observe(section);
-            });
-            
-             // Chart.js Roadmap Visualization
+            // Chart.js Roadmap Visualization
             const ctx = document.getElementById('roadmapChart').getContext('2d');
             const roadmapChart = new Chart(ctx, {
                 type: 'bar',
                 data: {
-                    labels: [
-                        'Setup & Basics', 'Variables & I/O', 'Operators', 'Conditionals', 'Loops', 'Functions',
-                        'Arrays', 'Strings', 'Pointers', 'Dynamic Memory'
-                    ],
+                    labels: [ 'Setup', 'Variables', 'Operators', 'Conditionals', 'Loops', 'Functions', 'Arrays', 'Strings', 'Pointers', 'Dynamic Mem'],
                     datasets: [{
-                        label: 'Day 1 Focus',
-                        data: [1, 1, 1, 1, 1, 1, 0, 0, 0, 0],
-                        backgroundColor: 'rgba(59, 130, 246, 0.7)',
-                        borderColor: 'rgba(59, 130, 246, 1)',
-                        borderWidth: 1,
-                        stack: 'Stack 0',
+                        label: 'Day 1 Focus', data: [1, 1, 1, 1, 1, 1, 0, 0, 0, 0], backgroundColor: 'rgba(59, 130, 246, 0.7)', stack: 'Stack 0',
                     }, {
-                        label: 'Day 2 Focus',
-                        data: [0, 0, 0, 0, 0, 0, 1, 1, 1, 1],
-                        backgroundColor: 'rgba(14, 165, 233, 0.7)',
-                        borderColor: 'rgba(14, 165, 233, 1)',
-                        borderWidth: 1,
-                        stack: 'Stack 0',
+                        label: 'Day 2 Focus', data: [0, 0, 0, 0, 0, 0, 1, 1, 1, 1], backgroundColor: 'rgba(14, 165, 233, 0.7)', stack: 'Stack 0',
                     }]
                 },
                 options: {
-                    indexAxis: 'y',
-                    responsive: true,
-                    maintainAspectRatio: false,
-                    scales: {
-                        x: {
-                            display: false,
-                            stacked: true,
-                        },
-                        y: {
-                           stacked: true,
-                           ticks: {
-                               font: {
-                                   size: 14,
-                               }
-                           }
-                        }
-                    },
-                    plugins: {
-                        legend: {
-                            position: 'top',
-                        },
-                        tooltip: {
-                            enabled: false
-                        }
-                    }
+                    indexAxis: 'y', responsive: true, maintainAspectRatio: false,
+                    scales: { x: { display: false, stacked: true }, y: { stacked: true, ticks: { font: { size: 14 } } } },
+                    plugins: { legend: { position: 'top' }, tooltip: { enabled: false } }
                 }
             });
 
