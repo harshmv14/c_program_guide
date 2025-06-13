@@ -1,0 +1,669 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>C Output Prediction Practice</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #f0f2f5;
+            display: flex;
+            justify-content: center;
+            align-items: flex-start; /* Align to top */
+            min-height: 100vh;
+            padding: 20px;
+            box-sizing: border-box;
+        }
+        .container {
+            background-color: #ffffff;
+            padding: 30px;
+            border-radius: 12px;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+            max-width: 900px;
+            width: 100%;
+        }
+        pre {
+            background-color: #f8f8f8;
+            border: 1px solid #e0e0e0;
+            padding: 15px;
+            border-radius: 8px;
+            overflow-x: auto;
+            font-size: 0.9em;
+            line-height: 1.4;
+            color: #333;
+        }
+        .code-block {
+            margin-bottom: 25px;
+            padding: 20px;
+            border: 1px solid #dcdcdc;
+            border-radius: 10px;
+            background-color: #fff;
+        }
+        .question-title {
+            font-weight: 600;
+            color: #2c3e50;
+            margin-bottom: 10px;
+            font-size: 1.1em;
+        }
+        .answer-container {
+            margin-top: 15px;
+            background-color: #ecf7ed;
+            border-left: 5px solid #4CAF50;
+            padding: 12px;
+            border-radius: 6px;
+        }
+        .answer-text {
+            color: #2e7d32;
+            font-weight: 500;
+        }
+        .toggle-button {
+            background-color: #3498db;
+            color: white;
+            padding: 8px 15px;
+            border-radius: 8px;
+            transition: background-color 0.3s ease;
+            cursor: pointer;
+            margin-top: 10px;
+            font-size: 0.9em;
+            display: inline-block;
+        }
+        .toggle-button:hover {
+            background-color: #2980b9;
+        }
+        .hidden {
+            display: none;
+        }
+        h1 {
+            color: #2c3e50;
+            font-size: 2.2em;
+            font-weight: 700;
+            text-align: center;
+            margin-bottom: 20px;
+        }
+        p {
+            color: #555;
+            margin-bottom: 25px;
+            line-height: 1.6;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>C Output Prediction Practice</h1>
+        <p>Sharpen your C programming skills by predicting the output of these code snippets. Each question challenges your understanding of C concepts like operators, control flow, pointers, arrays, and more. Try to determine the exact output or identify compilation errors before revealing the answer!</p>
+
+        <div id="questions-container">
+            <!-- Questions will be loaded here by JavaScript -->
+        </div>
+    </div>
+
+    <script>
+        const questions = [
+            {
+                code: `#include <stdio.h>
+int main() {
+    int x = 5;
+    printf("%d %d %d\\n", x, x++, ++x);
+    return 0;
+}`,
+                answer: `Undefined behavior (common outputs include 7 6 7 or 7 5 7 depending on compiler and evaluation order)`
+            },
+            {
+                code: `#include <stdio.h>
+int main() {
+    int a = 10, b = 20;
+    a = a + b - (b = a);
+    printf("a = %d, b = %d\\n", a, b);
+    return 0;
+}`,
+                answer: `a = 20, b = 10`
+            },
+            {
+                code: `#include <stdio.h>
+int main() {
+    char arr[] = "Hello";
+    printf("%lu\\n", sizeof(arr));
+    return 0;
+}`,
+                answer: `6 (5 characters + 1 null terminator)`
+            },
+            {
+                code: `#include <stdio.h>
+int main() {
+    int i = 0;
+    for (; i < 3; i++) {
+        printf("%d ", i);
+    }
+    printf("\\nFinal i: %d\\n", i);
+    return 0;
+}`,
+                answer: `0 1 2 \nFinal i: 3`
+            },
+            {
+                code: `#include <stdio.h>
+int main() {
+    int x = 10;
+    if (x == 10) {
+        printf("Equal\\n");
+    } else if (x > 5) {
+        printf("Greater\\n");
+    } else {
+        printf("Else\\n");
+    }
+    return 0;
+}`,
+                answer: `Equal`
+            },
+            {
+                code: `#include <stdio.h>
+void func(int *p) {
+    *p = 20;
+}
+int main() {
+    int val = 10;
+    func(&val);
+    printf("val = %d\\n", val);
+    return 0;
+}`,
+                answer: `val = 20`
+            },
+            {
+                code: `#include <stdio.h>
+#define MAX 10
+int main() {
+    printf("%d\\n", MAX * 2 + 5);
+    return 0;
+}`,
+                answer: `25`
+            },
+            {
+                code: `#include <stdio.h>
+int main() {
+    int i = 5;
+    printf("%d\\n", i++ + ++i);
+    return 0;
+}`,
+                answer: `Undefined behavior (typically 12 or 13, due to order of evaluation of operands)`
+            },
+            {
+                code: `#include <stdio.h>
+int main() {
+    int a = 10;
+    printf("%d %d\\n", a, a++);
+    return 0;
+}`,
+                answer: `Undefined behavior (common outputs include 11 10 or 10 10)`
+            },
+            {
+                code: `#include <stdio.h>
+int main() {
+    char c = 'A';
+    printf("%d\\n", c);
+    return 0;
+}`,
+                answer: `65 (ASCII value of 'A')`
+            },
+            {
+                code: `#include <stdio.h>
+int main() {
+    int a = 5, b = 2;
+    float result = (float)a / b;
+    printf("%.1f\\n", result);
+    return 0;
+}`,
+                answer: `2.5`
+            },
+            {
+                code: `#include <stdio.h>
+int main() {
+    int x = 0;
+    while (x < 3) {
+        printf("%d ", x);
+        x++;
+    }
+    printf("\\n");
+    return 0;
+}`,
+                answer: `0 1 2 `
+            },
+            {
+                code: `#include <stdio.h>
+int main() {
+    int arr[] = {1, 2, 3, 4, 5};
+    int *ptr = arr;
+    printf("%d %d\\n", *(ptr + 2), ptr[4]);
+    return 0;
+}`,
+                answer: `3 5`
+            },
+            {
+                code: `#include <stdio.h>
+int main() {
+    printf("Hello\\tWorld\\n");
+    return 0;
+}`,
+                answer: `Hello   World`
+            },
+            {
+                code: `#include <stdio.h>
+enum colors {RED, GREEN = 5, BLUE};
+int main() {
+    printf("%d %d %d\\n", RED, GREEN, BLUE);
+    return 0;
+}`,
+                answer: `0 5 6`
+            },
+            {
+                code: `#include <stdio.h>
+int main() {
+    int i = 1;
+    switch (i) {
+        case 1: printf("One\\n");
+        case 2: printf("Two\\n"); break;
+        default: printf("Default\\n");
+    }
+    return 0;
+}`,
+                answer: `One\nTwo`
+            },
+            {
+                code: `#include <stdio.h>
+int main() {
+    const int x = 10;
+    // x = 20; // This line would cause a compilation error
+    printf("%d\\n", x);
+    return 0;
+}`,
+                answer: `10`
+            },
+            {
+                code: `#include <stdio.h>
+int main() {
+    char str[] = "C Programming";
+    printf("%s\\n", str + 2);
+    return 0;
+}`,
+                answer: `Programming`
+            },
+            {
+                code: `#include <stdio.h>
+int main() {
+    int x = 10, y = 5;
+    printf("%d\\n", x > y ? x : y);
+    return 0;
+}`,
+                answer: `10`
+            },
+            {
+                code: `#include <stdio.h>
+int main() {
+    int a = 1, b = 2;
+    if (a++ && b--) {
+        printf("True\\n");
+    } else {
+        printf("False\\n");
+    }
+    printf("a=%d, b=%d\\n", a, b);
+    return 0;
+}`,
+                answer: `True\na=2, b=1`
+            },
+            {
+                code: `#include <stdio.h>
+int main() {
+    int x = 10;
+    {
+        int x = 20;
+        printf("%d\\n", x);
+    }
+    printf("%d\\n", x);
+    return 0;
+}`,
+                answer: `20\n10`
+            },
+            {
+                code: `#include <stdio.h>
+int main() {
+    int num = 123;
+    printf("%05d\\n", num);
+    return 0;
+}`,
+                answer: `00123`
+            },
+            {
+                code: `#include <stdio.h>
+void recurse(int n) {
+    if (n > 0) {
+        printf("%d ", n);
+        recurse(n - 1);
+    }
+}
+int main() {
+    recurse(3);
+    printf("\\n");
+    return 0;
+}`,
+                answer: `3 2 1 `
+            },
+            {
+                code: `#include <stdio.h>
+int main() {
+    char ch = 'X';
+    printf("%c is %d\\n", ch, ch);
+    return 0;
+}`,
+                answer: `X is 88`
+            },
+            {
+                code: `#include <stdio.h>
+int main() {
+    int arr[5] = {10, 20, 30, 40, 50};
+    int *p = arr;
+    printf("%d %d\\n", *(p + 3), p[1]);
+    return 0;
+}`,
+                answer: `40 20`
+            },
+            {
+                code: `#include <stdio.h>
+#define SQUARE(x) x * x
+int main() {
+    int result = 100 / SQUARE(5);
+    printf("%d\\n", result);
+    return 0;
+}`,
+                answer: `4 (macro expands to 100 / 5 * 5)`
+            },
+            {
+                code: `#include <stdio.h>
+int main() {
+    static int count = 0;
+    count++;
+    printf("%d\\n", count);
+    if (count < 3) {
+        main(); // Recursive call, but static var retains value
+    }
+    return 0;
+}`,
+                answer: `1\n2\n3`
+            },
+            {
+                code: `#include <stdio.h>
+int main() {
+    int x = 5;
+    printf("%d %d\\n", x << 1, x >> 1);
+    return 0;
+}`,
+                answer: `10 2`
+            },
+            {
+                code: `#include <stdio.h>
+int main() {
+    float f = 3.14;
+    int i = (int)f;
+    printf("%d\\n", i);
+    return 0;
+}`,
+                answer: `3`
+            },
+            {
+                code: `#include <stdio.h>
+int main() {
+    int a = 5, b = 10, c = 15;
+    if (a < b && b < c) {
+        printf("True\\n");
+    } else {
+        printf("False\\n");
+    }
+    return 0;
+}`,
+                answer: `True`
+            },
+            {
+                code: `#include <stdio.h>
+int main() {
+    char str[20];
+    strcpy(str, "C Language");
+    printf("%s\\n", str);
+    return 0;
+}`,
+                answer: `C Language`
+            },
+            {
+                code: `#include <stdio.h>
+int main() {
+    int x = -1;
+    printf("%u\\n", x); // Printing signed as unsigned
+    return 0;
+}`,
+                answer: `4294967295 (or similar large unsigned number, depends on int size, typically 2^32 - 1 for 32-bit int)`
+            },
+            {
+                code: `#include <stdio.h>
+int main() {
+    int i = 0;
+    do {
+        printf("%d ", i);
+        i++;
+    } while (i < 3);
+    printf("\\n");
+    return 0;
+}`,
+                answer: `0 1 2 `
+            },
+            {
+                code: `#include <stdio.h>
+int main() {
+    int a = 10;
+    int b = a+++a++; // Undefined behavior
+    printf("a = %d, b = %d\\n", a, b);
+    return 0;
+}`,
+                answer: `Undefined behavior (due to multiple modifications without sequence points)`
+            },
+            {
+                code: `#include <stdio.h>
+int main() {
+    char s[] = "Programming";
+    char *p = s + 3;
+    printf("%c %s\\n", *p, p);
+    return 0;
+}`,
+                answer: `g gramming`
+            },
+            {
+                code: `#include <stdio.h>
+int main() {
+    printf("%d\\n", printf("Hello")); // printf returns number of characters printed
+    return 0;
+}`,
+                answer: `Hello5`
+            },
+            {
+                code: `#include <stdio.h>
+int main() {
+    unsigned int x = 0;
+    while (x++ != 0); // Loop with a semicolon after condition
+    printf("%d\\n", x);
+    return 0;
+}`,
+                answer: `1`
+            },
+            {
+                code: `#include <stdio.h>
+int main() {
+    int a = 10;
+    const int *ptr = &a; // pointer to a constant int
+    // *ptr = 20; // compilation error: cannot modify a constant object
+    a = 30; // can modify 'a' directly
+    printf("%d\\n", *ptr);
+    return 0;
+}`,
+                answer: `30`
+            },
+            {
+                code: `#include <stdio.h>
+int main() {
+    int a = 1, b = 0;
+    int result = a || b;
+    printf("%d\\n", result);
+    return 0;
+}`,
+                answer: `1`
+            },
+            {
+                code: `#include <stdio.h>
+void swap(int *x, int *y) {
+    int temp = *x;
+    *x = *y;
+    *y = temp;
+}
+int main() {
+    int i = 10, j = 20;
+    swap(&i, &j);
+    printf("i = %d, j = %d\\n", i, j);
+    return 0;
+}`,
+                answer: `i = 20, j = 10`
+            },
+            {
+                code: `#include <stdio.h>
+int main() {
+    int x = 5;
+    for (int i = 0; i < x; i++) {
+        if (i == 2) continue;
+        printf("%d ", i);
+    }
+    printf("\\n");
+    return 0;
+}`,
+                answer: `0 1 3 4 `
+            },
+            {
+                code: `#include <stdio.h>
+int main() {
+    int x = 1;
+    goto label;
+    printf("Line 1\\n");
+label:
+    printf("Line 2\\n");
+    return 0;
+}`,
+                answer: `Line 2`
+            },
+            {
+                code: `#include <stdio.h>
+int main() {
+    int val = 010; // Octal literal
+    printf("%d\\n", val);
+    return 0;
+}`,
+                answer: `8`
+            },
+            {
+                code: `#include <stdio.h>
+int main() {
+    char *ptr = "Example"; // String literal, read-only
+    // *ptr = 'A'; // This would cause a runtime error
+    printf("%s\\n", ptr);
+    return 0;
+}`,
+                answer: `Example`
+            },
+            {
+                code: `#include <stdio.h>
+int main() {
+    union data {
+        int i;
+        float f;
+    };
+    union data d;
+    d.i = 10;
+    d.f = 5.5; // Overwrites d.i
+    printf("%d\\n", d.i); // Behavior depends on how 5.5 is represented in int
+    return 0;
+}`,
+                answer: `Implementation-defined (will print garbage or unexpected integer representation of 5.5 in memory)`
+            },
+            {
+                code: `#include <stdio.h>
+int main() {
+    printf("%d\\n", 5 > 3 && 10 < 20);
+    return 0;
+}`,
+                answer: `1`
+            },
+            {
+                code: `#include <stdio.h>
+int main() {
+    int a = 10, b = 3;
+    printf("%d\\n", a % b);
+    return 0;
+}`,
+                answer: `1`
+            },
+            {
+                code: `#include <stdio.h>
+int main() {
+    for (int i = 0; i < 5; i++) {
+        if (i == 3) break;
+        printf("%d ", i);
+    }
+    printf("\\nLoop ended\\n");
+    return 0;
+}`,
+                answer: `0 1 2 \nLoop ended`
+            },
+            {
+                code: `#include <stdio.h>
+int main() {
+    int x = 10;
+    printf("Value is: %d\\n", x);
+    return 0;
+}`,
+                answer: `Value is: 10`
+            },
+            {
+                code: `#include <stdio.h>
+int main() {
+    int a = 10;
+    a += 5;
+    printf("%d\\n", a);
+    return 0;
+}`,
+                answer: `15`
+            }
+        ];
+
+        const questionsContainer = document.getElementById('questions-container');
+
+        questions.forEach((q, index) => {
+            const questionBlock = document.createElement('div');
+            questionBlock.className = 'code-block';
+            questionBlock.innerHTML = `
+                <div class="question-title">Question ${index + 1}: Predict the output.</div>
+                <pre><code>${q.code}</code></pre>
+                <button class="toggle-button" onclick="toggleAnswer(${index})">Show Answer</button>
+                <div id="answer-${index}" class="answer-container hidden">
+                    <div class="answer-text">Output: <br> ${q.answer.replace(/\\n/g, '<br>')}</div>
+                </div>
+            `;
+            questionsContainer.appendChild(questionBlock);
+        });
+
+        function toggleAnswer(index) {
+            const answerDiv = document.getElementById(`answer-${index}`);
+            const button = answerDiv.previousElementSibling; // The button is the previous sibling
+            answerDiv.classList.toggle('hidden');
+            if (answerDiv.classList.contains('hidden')) {
+                button.textContent = 'Show Answer';
+            } else {
+                button.textContent = 'Hide Answer';
+            }
+        }
+    </script>
+</body>
+</html>
